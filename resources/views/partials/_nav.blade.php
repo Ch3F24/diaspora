@@ -1,12 +1,12 @@
 <div class="bg-transparent sticky top-0" x-data="{ open: false }" @scroll.window="atTop = (window.pageYOffset > 20 ? false : true)" :class="{ 'shadow-md' : !atTop }">
     <div class="max-w-7xl mx-auto px-8 sm:px-16">
         <div class="flex justify-between items-center border-b border-white md:border-none py-6">
-            <div class="flex justify-start md:order-last md:ml-8 md:pt-8">
-                <a href="#">
-                    <p class="text-2xl md:text-5xl text-roman">Magyarok <br>a nagyvilágban</p>
+            <div class="flex justify-start md:order-last md:ml-8 md:pt-8 md:w-5/12">
+                <a href="{{route('home')}}">
+                    <p class="text-2xl md:text-5xl text-roman">{{ $page_title ? $page_title : 'Magyarok /n a nagyvilágban'}} </p>
                 </a>
             </div>
-            <div class="flex justify-between items-center md:border-b md:border-white md:justify-start md:flex-1">
+            <div class="flex justify-between items-center md:border-b md:border-white md:justify-start md:w-7/12">
                 <div class="-mr-2 -my-2 md:hidden" x-on:click="open = true">
                     <button type="button"
                             class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
@@ -19,8 +19,8 @@
                         </svg>
                     </button>
                 </div>
-                <nav class="hidden md:flex space-x-10">
-                    <ul class="flex text-roman">
+                <nav class="hidden md:flex space-x-10 items-end">
+                    <ul class="flex text-roman pb-2">
                         @foreach(Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                             <li>
                                 <a
@@ -28,7 +28,7 @@
                                     hreflang="{{ $localeCode }}"
                                     @class([
                                         'text-white' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::getCurrentLocale() == $localeCode,
-                                        "after:content-['|'] after:ml-1 after:mr-2 after:text-roman" => $localeCode == 'hu'])
+                                        "after:content-['|'] after:ml-1 after:mr-2 after:text-roman" => $localeCode == 'hu','hover:text-white transition-color font-light text-xl'])
                                     href="{{ Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
                                 >
                                     {{ strtoupper($localeCode) }}
@@ -36,8 +36,8 @@
                             </li>
                         @endforeach
                     </ul>
-                    <a href="#footer" class="text-base font-medium text-roman hover:text-gray-900"> Menu 1 </a>
-                    <a href="#" class="text-base font-medium text-roman hover:text-gray-900"> Menu 2 </a>
+                    <a href="{{ route('location','wintondale') }}" class="text-xl font-light text-roman hover:text-white transition-color pb-2">{{ __('Wintondale') }}</a>
+                    <a href="{{ route('location','argentine') }}" class="text-xl font-light text-roman hover:text-white transition-color pb-2">{{ __('Argentine') }}</a>
                 </nav>
             </div>
         </div>

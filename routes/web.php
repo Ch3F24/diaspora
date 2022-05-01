@@ -18,8 +18,12 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 //Route::get('/',[PageController::class,'home'])->name('home');
 
 Route::group([
-    'prefix' => LaravelLocalization::setLocale(),
-    'middleware' => ['localize', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
-], function () {
-    Route::get('/',[PageController::class,'home'])->name('home');
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => ['localize', 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
+    ], function () {
+
+        Route::get('/',[PageController::class,'home'])->name('home');
+        Route::get('/{location}',[PageController::class,'location'])->name('location');
+        Route::get('/{location}/{slug}',[PageController::class,'category'])->name('category');
+//        Route::get('/argentine',[PageController::class,'argentine'])->name('location.argentine');
 });

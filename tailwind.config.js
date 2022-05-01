@@ -1,8 +1,9 @@
 module.exports = {
+
     content: [
         './resources/views/**/*.blade.php',
         // './resources/views/front/**/*.blade.php',
-        // './resources/js/components/*.vue',
+        './resources/js/components/*.vue',
         // './resources/js/components/**/*.vue',
         './resources/js/*.js'
     ],
@@ -14,10 +15,12 @@ module.exports = {
                 'roman': '#DA6C56'
             },
             fontFamily: {
-                sans: ['Rubik','sans-serif'],
+                sans: ['Helvetica','sans-serif'],
                 roboto: ['Roboto', 'sans-serif'],
             },
         },
     },
-    plugins: [],
+    plugins: [
+        // require('flowbite/plugin')
+    ],
 }

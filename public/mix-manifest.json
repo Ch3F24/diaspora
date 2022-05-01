@@ -1,4 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/js/leader-line.min.js": "/js/leader-line.min.js",
+    "/fonts/HelveticaNowText-Medium.otf": "/fonts/HelveticaNowText-Medium.otf",
+    "/fonts/HelveticaNowText-MediumItalic.otf": "/fonts/HelveticaNowText-MediumItalic.otf",
+    "/fonts/HelveticaNowText-RegIta.otf": "/fonts/HelveticaNowText-RegIta.otf",
+    "/fonts/HelveticaNowText-Regular.otf": "/fonts/HelveticaNowText-Regular.otf"
 }
