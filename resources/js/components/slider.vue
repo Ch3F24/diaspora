@@ -1,45 +1,81 @@
 <template>
 
-    <div class="grid grid-cols-2 md:flex text-white" v-if="category">
-        <div class="w-5/12 space-y-8">
-            <h3 v-if="category.sub_title" class="text-2xl font-bold italic">{{ category.sub_title }}</h3>
+    <div class="relative grid lg:grid-cols-7 h-full my-6 gap-x-4 text-white font-light" v-if="category" >
+        <div class="lg:hidden">
+            <h3 v-if="category.sub_title" class="text-2xl  italic mb-8">{{ category.sub_title }}</h3>
             <p v-if="category.description">{{ category.description }}</p>
-
-            <div>
-                <p class="uppercase text-roman text-xl mb-4" v-if="equipmentTitle">{{ equipmentTitle }}</p>
-                <div class="columns-2 space-y-4 mb-6">
-                    <p v-if="equipmentSubTitle">{{ equipmentSubTitle }}</p>
-                    <p v-if="equipmentNews">{{ equipmentNews }}</p>
-                </div>
-
-                <svg-vue icon="hunglish" class="w-28" v-if="equipmentHunglish"></svg-vue>
-
-                <p v-if="equipmentHunglish">{{ equipmentHunglish }}</p>
-            </div>
-
         </div>
-        <div class="lg:order-first w-6/12 pr-8 mr-auto" v-if="category.equipments">
-<!--            <flickity ref="flickity" :options="flickityOptions" class="w-4/5 h-full slider">-->
-            <flickity ref="flickity" :options="flickityOptions" class="w-full slider">
-                <div class="carousel-cell flex items-center justify-center h-full" v-for="equipment in category.equipments" :key="equipment.id">
-                    <svg-vue v-if="equipment.svg" :icon="equipment.svg" class="hidden  transition transition-opacity duration-500"></svg-vue>
-                    <img v-if="equipment.cover" class="hidden transition transition-opacity opacity-0 duration-300" :src="equipment.cover.default" alt="">
-                    <img v-else class="hidden transition transition-opacity opacity-0 duration-300" src="https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80" alt="">
+        <div class="col-span-full lg:col-span-4 my-12 lg:my-0 lg:mx-16">
+            <flickity ref="flickity" :options="flickityOptions" class="w-full slider h-full md:h-auto transition transition-opacity" style=" opacity: 0">
+                <div class="carousel-cell flex items-center justify-center h-full" v-for="(equipment,key) in category.equipments" :key="equipment.id">
+                    <svg-vue v-if="equipment.svg && key === 0" :icon="equipment.svg" class="opacity-0 transition transition-opacity duration-500 md:max-h-[50vh] lg:max-h-screen"></svg-vue>
+                    <img v-if="equipment.cover" :class="{'hidden opacity-0': key === 0}" class="transition transition-opacity duration-300 md:max-h-[50vh] lg:max-h-screen" :src="equipment.cover.default" alt="">
+                    <img v-else :class="{'hidden opacity-0': key === 0}" class="transition transition-opacity duration-300 md:max-h-[50vh] lg:max-h-screen" src="https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80" alt="">
                 </div>
             </flickity>
         </div>
-        <Transition name="fade"  v-if="category.equipments">
-            <div class="col-start-8 col-end-12 space-y-8 md:hidden" v-if="loaded">
-                    <p class="uppercase text-roman text-xl">{{ equipmentTitle }}</p>
-                    <div class="columns-2 space-y-4">
-                        <p>{{ equipmentSubTitle }}</p>
-                        <p>{{ equipmentNews }}</p>
-                    </div>
-                    <p>{{ equipmentHunglish }}</p>
-        <!--            <p>{{ $equipment->purpose }}</p>-->
+        <div class=" lg:col-start-5 lg:col-end-8 lg:row-span-full">
+            <div class="hidden lg:block mb-8">
+                <h3 v-if="category.sub_title" class="text-2xl font-light italic mb-8">{{ category.sub_title }}</h3>
+                <p v-if="category.description">{{ category.description }}</p>
             </div>
-        </Transition>
+
+            <p class="uppercase text-roman font-bold text-xl mb-4 lg:mb-8" v-if="equipmentTitle">{{ equipmentTitle }}</p>
+            <div class="lg:columns-2 space-y-4 mb-8 lg:mb-12">
+                <p v-if="equipmentSubTitle">{{ equipmentSubTitle }}</p>
+                <p v-if="equipmentNews">{{ equipmentNews }}</p>
+            </div>
+
+            <svg-vue icon="hunglish" class="w-28" v-if="equipmentHunglish"></svg-vue>
+
+            <p v-if="equipmentHunglish" class="text-left">{{ equipmentHunglish }}</p>
+        </div>
+
+
     </div>
+
+
+<!--    <div class="grid md:flex text-white" v-if="category">-->
+<!--        <div class="w-full lg:w-5/12 space-y-8 order-first lg:order-none my-6">-->
+<!--            <h3 v-if="category.sub_title" class="text-2xl font-bold italic">{{ category.sub_title }}</h3>-->
+<!--            <p v-if="category.description">{{ category.description }}</p>-->
+
+<!--            <div class="hidden lg:block">-->
+<!--                <p class="uppercase text-roman text-xl mb-4" v-if="equipmentTitle">{{ equipmentTitle }}</p>-->
+<!--                <div class="columns-2 space-y-4 mb-6">-->
+<!--                    <p v-if="equipmentSubTitle">{{ equipmentSubTitle }}</p>-->
+<!--                    <p v-if="equipmentNews">{{ equipmentNews }}</p>-->
+<!--                </div>-->
+
+<!--                <svg-vue icon="hunglish" class="w-28" v-if="equipmentHunglish"></svg-vue>-->
+
+<!--                <p v-if="equipmentHunglish">{{ equipmentHunglish }}</p>-->
+<!--            </div>-->
+
+<!--        </div>-->
+<!--        <div class="w-full lg:order-first lg:w-6/12 lg:pr-8 mr-auto" v-if="category.equipments">-->
+<!--&lt;!&ndash;            <flickity ref="flickity" :options="flickityOptions" class="w-4/5 h-full slider">&ndash;&gt;-->
+<!--            <flickity ref="flickity" :options="flickityOptions" class="w-full slider min-h-[50vh]">-->
+<!--                <div class="carousel-cell flex items-center justify-center h-full" v-for="equipment in category.equipments" :key="equipment.id">-->
+<!--                    <svg-vue v-if="equipment.svg" :icon="equipment.svg" class="hidden  transition transition-opacity duration-500"></svg-vue>-->
+<!--                    <img v-if="equipment.cover" class="hidden transition transition-opacity opacity-0 duration-300" :src="equipment.cover.default" alt="">-->
+<!--                    <img v-else class="hidden transition transition-opacity opacity-0 duration-300" src="https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80" alt="">-->
+<!--                </div>-->
+<!--            </flickity>-->
+<!--        </div>-->
+
+<!--        <div class="space-y-8 md:hidden mt-6" v-if="category.equipments">-->
+<!--            <p class="uppercase text-roman text-xl mb-4" v-if="equipmentTitle">{{ equipmentTitle }}</p>-->
+<!--            <div class="space-y-4">-->
+<!--                <p v-if="equipmentSubTitle">{{ equipmentSubTitle }}</p>-->
+<!--                <p v-if="equipmentNews">{{ equipmentNews }}</p>-->
+<!--            </div>-->
+
+<!--            <svg-vue icon="hunglish" class="w-28" v-if="equipmentHunglish"></svg-vue>-->
+
+<!--            <p v-if="equipmentHunglish">{{ equipmentHunglish }}</p>-->
+<!--        </div>-->
+<!--    </div>-->
 </template>
 
 <script>
@@ -57,14 +93,22 @@ export default {
                 initialIndex: 0,
                 prevNextButtons: true,
                 pageDots: false,
-                wrapAround: true
+                wrapAround: true,
+                adaptiveHeight: true,
+                arrowShape: {
+                    x0: 10,
+                    x1: 60, y1: 50,
+                    x2: 60, y2: 45,
+                    x3: 15
+                }
 
                 // any options from Flickity can be used
             },
             equipments: null,
             category: null,
-            loaded: true,
-            index: 0
+            loaded: false,
+            index: 0,
+            flickity: null
         }
     },
     created() {
@@ -74,19 +118,36 @@ export default {
         this.category = JSON.parse(this.categoryProp)
         this.equipments = this.category.equipments
         let _this = this
+            // this.loaded = true
+
         this.$nextTick(() => {
-            this.setContent()
-            this.svgSwap()
             this.index = this.$refs.flickity.selectedIndex();
+            this.svgSwap(this)
+            // this.$refs.flickity.style.remove('min-height')
+            const svg = document.querySelector('.slider svg');
+            const height = svg.getBoundingClientRect().height + 'px'
+            // this.loaded = true
+            this.resizeViewport(null,height)
+            //
             this.$refs.flickity.on('change', function (e) {
-                _this.svgSwap();
+                _this.resizeViewport(e)
                 _this.index = e;
             });
         });
     },
     methods: {
-        svgSwap() {
+        resizeViewport(index = null,height = null) {
+            let viewport = document.querySelector('.flickity-viewport');
+
+            if (index !== null) {
+                height = this.$refs.flickity.cells()[index].element.querySelector('img').offsetHeight + 'px';
+            }
+
+            viewport.style.height = height
+        },
+        svgSwap(__this) {
             let element = this.$refs.flickity.selectedElement();
+            // this.$refs.flickity.style.opacity = '100%';
 
             if (element.hasChildNodes()) {
                 let img = element.querySelector('img');
@@ -95,7 +156,10 @@ export default {
                 } else {
                     if(element.querySelector('svg')) {
                         element.classList.add('loaded');
-                        element.children[0].classList.remove('hidden');
+                        setTimeout(function () {
+                            __this.$refs.flickity.$el.style.opacity = '100%'
+                            element.children[0].style.opacity = '100%';
+                        },400)
 
                         setTimeout(function () {
                             element.children[0].style.opacity = 0;
@@ -106,7 +170,9 @@ export default {
                             // element.children[0].style.opacity = 0;
                             element.children[1].style.opacity = '100%';
                             element.children[0].remove();
+                            __this.resizeViewport(0);
                         },2300)
+
                     } else {
                         img.style.opacity = '100%';
                         img.classList.remove('hidden');
@@ -153,7 +219,10 @@ export default {
     margin-right: 1rem;
 }
 .slider {
-    max-height: 70vh;
-    height: 100%;
+    //max-height: 70vh;
+    //height: 100%;
+}
+.flickity-resize .carousel-cell {
+    min-height: 100%;
 }
 </style>

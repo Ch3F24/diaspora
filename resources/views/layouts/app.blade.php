@@ -7,7 +7,7 @@
         <title>{{ __('Diaspora') }}</title>
         <link rel="stylesheet" href="{{mix('css/app.css')}}">
     </head>
-    <body class="bg-midnight flex flex-col min-h-screen" x-data="{ atTop: true }">
+    <body class="bg-midnight flex flex-col h-screen" x-data="{ atTop: true }">
 
         @include('partials/_nav',['page_title' => $page_title])
 
@@ -15,7 +15,7 @@
             @yield('content')
         </main>
 
-        @include('partials/_footer')
+{{--        @include('partials/_footer')--}}
     </body>
 {{--    <script src="{{url('node_modules/leader-line/leader-line.min')}}"></script>--}}
     <script src="//unpkg.com/alpinejs" defer></script>

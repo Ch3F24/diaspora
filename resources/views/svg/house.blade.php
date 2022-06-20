@@ -1,5 +1,5 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-     viewBox="0 0 473 517" style="enable-background:new 0 0 473 517;" xml:space="preserve" id="house">
+     viewBox="0 0 473 517" style="enable-background:new 0 0 473 517;" xml:space="preserve" id="house" class="max-h-[60vh] mx-auto">
     <polyline style="fill:none;stroke:#F8BFBA;stroke-miterlimit:10;" points="87.31,51.5 377.59,1.38 472.27,152.28 "/>
     <polygon style="fill:none;stroke:#F8BFBA;stroke-miterlimit:10;" points="0.83,285.34 189.91,384.5 472.4,262.62 290.15,201.11 "/>
     <polyline style="fill:none;stroke:#F8BFBA;stroke-miterlimit:10;" points="0.99,392.45 293.53,285.27 472.23,357.12 "/>

@@ -14,11 +14,19 @@
         'label' => 'Leltári szám',
         'maxlength' => 120
     ])
-    @formField('input', [
-        'name' => 'svg',
-        'label' => 'Illusztráció neve',
-        'maxlength' => 250
+{{--    @formField('input', [--}}
+{{--        'name' => 'svg',--}}
+{{--        'label' => 'Illusztráció neve',--}}
+{{--        'maxlength' => 250--}}
+{{--    ])--}}
+
+    @formField('select', [
+    'name' => 'svg',
+    'label' => 'Illusztráció',
+    'placeholder' => 'Válasszon Illusztráció',
+    'options' => $illustrations
     ])
+
     @formField('input', [
         'name' => 'purpose',
         'label' => 'Cél',

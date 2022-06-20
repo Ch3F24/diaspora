@@ -34,14 +34,14 @@
 @tailwind components;
 @tailwind utilities;
 
-.flickity-prev-next-button.next {
-    right: -60px!important;
-}
-.flickity-prev-next-button.previous {
-    left: -60px!important;
-}
 .equipments .flickity-button {
     background-color: transparent;
+    color: #ffffff;
+    height: 60px;
+    width: 60px;
+}
+.equipments .flickity-button:hover {
+    @apply text-roman bg-transparent;
 }
 .illustration-box img {
     max-height: calc(80vh - (176px + 24px));
@@ -58,4 +58,36 @@
     stroke: #F8C0BB;
     stroke-miterlimit: 10;
     /*transition-property: fill;*/
+}
+
+.slider .flickity-prev-next-button.next {
+    top: calc(100% - 22px);
+    right: 0;
+    outline: none;
+    box-shadow: none;
+}
+.slider .flickity-prev-next-button.previous {
+    top: calc(100% - 22px);
+    left: 0;
+    outline: none;
+    box-shadow: none;
+}
+.flickity-viewport {
+    margin-bottom: 60px;
+    transition: height 0.4s;
+
+}
+
+@media (min-width: 1024px) {
+    .flickity-viewport {
+        margin-bottom: 0;
+    }
+    .slider .flickity-prev-next-button.next {
+        right: -60px!important;
+        top: 50%;
+    }
+    .slider .flickity-prev-next-button.previous {
+        left: -60px!important;
+        top: 50%;
+    }
 }
