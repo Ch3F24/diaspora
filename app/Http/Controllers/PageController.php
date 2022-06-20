@@ -18,7 +18,7 @@ class PageController extends Controller
         ],
         'argentine' => [
             'key' => 2,
-            'title' => 'Argentína'
+            'title' => 'Argentine'
         ],
     ];
 
@@ -46,8 +46,7 @@ class PageController extends Controller
 //        $categories = new CategoryResource($categories);
         $categories = CategoryCollection::collection($categories);
 
-
-        $page_title = self::LOCATION[$location]['title'];
+        $page_title = __(self::LOCATION[$location]['title']);
 
 //        return view('locations.index',compact('category','page_title'));
         return view('categories.index',compact('categories','page_title'));
