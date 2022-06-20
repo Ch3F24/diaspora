@@ -54,7 +54,10 @@ class PageController extends Controller
 
     public function category($location,$slug)
     {
-        $category = $this->categoryRepository->findBySlug($slug)->published()->whereLocation($location)->first();
+//        $category = $this->categoryRepository->findBySlug($slug)->published()->whereLocation($location)->first();
+        $category = Category::query()->whereHas('slugs',function ($q) use ($slug) {
+            $q->where('slug',$slug);
+        })->published()->first();
 
         if (!$category) {
             abort(404);
