@@ -36,7 +36,7 @@
                         @endforeach
                     </ul>
                     <a href="{{ route('location','wintondale') }}" class="text-xl font-light text-roman hover:text-white transition-color pb-2">{{ __('Wintondale') }}</a>
-                    <a href="{{ route('location','argentine') }}" class="text-xl font-light text-roman hover:text-white transition-color pb-2">{{ __('Argentine') }}</a>
+{{--                    <a href="{{ route('location','argentine') }}" class="text-xl font-light text-roman hover:text-white transition-color pb-2">{{ __('Argentine') }}</a>--}}
                 </nav>
             </div>
         </div>
