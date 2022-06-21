@@ -216,7 +216,13 @@ export default {
 @import '~flickity/dist/flickity.min.css';
 .carousel-cell {
     width: 100%;
+    max-height: 60vh;
     margin-right: 1rem;
+}
+@media screen and (min-height: 1024px) {
+    .carousel-cell {
+        max-height: 60vh;
+    }
 }
 .slider {
     //max-height: 70vh;
