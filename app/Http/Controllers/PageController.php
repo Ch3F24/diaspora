@@ -37,7 +37,7 @@ class PageController extends Controller
     }
 
     public function location($location) {
-        $categories = $this->categoryRepository->published()->with('featured')->whereLocation($location)->get();
+        $categories = $this->categoryRepository->published()->whereHas('featured')->whereLocation($location)->get();
 //        $equipment = $this->categoryRepository->published()->whereLocation(self::LOCATION[$location]['key'])->first();
         if (!$categories) {
             abort(404);
