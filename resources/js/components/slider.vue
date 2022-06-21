@@ -165,13 +165,13 @@ export default {
                             element.children[0].style.opacity = 0;
                             element.children[1].classList.remove('hidden');
                             // element.children[0].remove();
-                        },2100)
+                        },3800)
                         setTimeout(function () {
                             // element.children[0].style.opacity = 0;
                             element.children[1].style.opacity = '100%';
                             element.children[0].remove();
                             __this.resizeViewport(0);
-                        },2300)
+                        },4100)
 
                     } else {
                         img.style.opacity = '100%';

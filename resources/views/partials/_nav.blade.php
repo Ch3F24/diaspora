@@ -28,7 +28,7 @@
                                     hreflang="{{ $localeCode }}"
                                     @class([
                                         'text-white' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::getCurrentLocale() == $localeCode,
-                                        "after:content-['|'] after:ml-1 after:mr-2 after:text-roman" => $localeCode == 'hu','hover:text-white transition-color font-light text-xl'])
+                                        "after:content-['|'] after:mx-2 after:text-roman flex" => $localeCode == 'hu','hover:text-white transition-color font-light text-xl'])
                                     href="{{ Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                                     {{ strtoupper($localeCode) }}
                                 </a>
