@@ -18,7 +18,7 @@ class EquipmentCollection extends JsonResource
         if($this->resource->hasImage('cover','default')) {
             $cover = [
 //                'default' => $this->resource->image('cover','default',['h'=> 320,'q' => 60]),
-                'default' => $this->resource->image('cover','default',['fm' => 'png']),
+                'default' => $this->resource->image('cover','default',['w' => '1920','fm' => 'png','q' => 90]),
 //                '1x' => $this->resource->image('cover','default',['h'=> 320, 'dpr' => 1,'q' => 60]),
 //                '2x' => $this->resource->image('cover','default',['h'=> 320, 'dpr' => 2,'q' => 60]),
 //                '3x' => $this->resource->image('cover','default',['h'=> 320, 'dpr' => 3,'q' => 60]),
