@@ -2,23 +2,10 @@
 
 @section('contentFields')
     @formField('input', [
-        'name' => 'sub_title',
-        'label' => 'Felirat',
-        'translated' => true,
-        'maxlength' => 300,
-        'type' => 'textarea',
-        'rows' => 3
-    ])
-    @formField('input', [
         'name' => 'inventory_number',
         'label' => 'Leltári szám',
         'maxlength' => 120
     ])
-{{--    @formField('input', [--}}
-{{--        'name' => 'svg',--}}
-{{--        'label' => 'Illusztráció neve',--}}
-{{--        'maxlength' => 250--}}
-{{--    ])--}}
 
     @formField('select', [
     'name' => 'svg',
@@ -27,17 +14,25 @@
     'options' => $illustrations
     ])
 
-    @formField('input', [
-        'name' => 'purpose',
-        'label' => 'Cél',
-        'translated' => true,
-        'maxlength' => 300
-    ])
+{{--    @formField('input', [--}}
+{{--        'name' => 'purpose',--}}
+{{--        'label' => 'Cél',--}}
+{{--        'translated' => true,--}}
+{{--        'maxlength' => 300--}}
+{{--    ])--}}
     @formField('input', [
         'name' => 'hunglish',
         'label' => 'Hunglish',
         'translated' => true,
         'maxlength' => 300
+    ])
+    @formField('input', [
+        'name' => 'sub_title',
+        'label' => 'Felirat',
+        'translated' => true,
+        'maxlength' => 2000,
+        'type' => 'textarea',
+        'rows' => 3
     ])
     @formField('input', [
         'name' => 'news',
