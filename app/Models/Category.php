@@ -34,7 +34,7 @@ class Category extends Model implements Sortable
 
     public function equipments()
     {
-        return $this->hasMany(Equipment::class,'category_id')->where('published','=',1)->orderBy('featured');
+        return $this->hasMany(Equipment::class,'category_id')->where('published','=',1)->orderBy('featured','desc');
     }
 
     public function featured()
