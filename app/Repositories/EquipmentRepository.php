@@ -16,4 +16,17 @@ class EquipmentRepository extends ModuleRepository
     {
         $this->model = $model;
     }
+    protected $indexColumns = [
+        'title' => [ // field column
+            'title' => 'Title',
+            'field' => 'title',
+        ],
+        'relationName' => [ // relation column
+            // Take a look at the example in the next section fot the implementation of the sort
+            'title' => 'Katória',
+            'sort' => true,
+            'relationship' => 'category',
+            'field' => 'title'
+        ],
+    ];
 }
