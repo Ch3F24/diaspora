@@ -32,4 +32,17 @@ class EquipmentController extends BaseModuleController
             'illustrations' => $a
         ];
     }
+    protected $indexColumns = [
+        'title' => [ // field column
+            'title' => 'Title',
+            'field' => 'title',
+        ],
+        'category' => [ // relation column
+            // Take a look at the example in the next section fot the implementation of the sort
+            'title' => 'Katória',
+            'sort' => true,
+            'relationship' => 'category',
+            'field' => 'title'
+        ],
+    ];
 }
