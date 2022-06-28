@@ -22,7 +22,7 @@
             @foreach($categories as $key => $category)
                 <div class="text-center md:col-start-5 md:col-end-8 @if($key <= 2) order-first md:order-none @endif">
                     <h4 id="cat-{{ $key }}" class="text-white lg:text-2xl inline-block category-link">
-                        <a href="{{ route('category',['location' => $category->location,'slug' => $category->slug]) }}" class="lg:pl-4 hover:text-roman">{{ $category->featured->title }}</a>
+                        <a href="{{ route('category',['location' => $category->location,'slug' => $category->slug]) }}" class="lg:pl-4 hover:text-roman">{{ $category->title }}</a>
                     </h4>
                 </div>
             @endforeach
