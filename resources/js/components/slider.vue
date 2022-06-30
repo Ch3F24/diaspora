@@ -6,7 +6,7 @@
             <p v-if="category.description">{{ category.description }}</p>
         </div>
         <div class="col-span-full lg:col-span-4 my-12 lg:my-0 lg:mx-16">
-            <flickity ref="flickity" :options="flickityOptions" class="w-full slider h-full transition transition-opacity" style=" opacity: 0">
+            <flickity ref="flickity" :options="flickityOptions" class="w-full slider h-full md:h-auto transition transition-opacity" style=" opacity: 0">
                 <div class="carousel-cell flex items-center justify-center h-full" v-for="(equipment,key) in category.equipments" :key="equipment.id">
                     <svg-vue v-if="equipment.svg && key === 0" :icon="equipment.svg" class="opacity-0 transition transition-opacity duration-500 md:max-h-[50vh] lg:max-h-[60vh]"></svg-vue>
                     <img v-if="equipment.cover" :class="{'hidden opacity-0': key === 0}" class="transition transition-opacity duration-300 md:max-h-[50vh] lg:max-h-[60vh] h-full" :src="equipment.cover.default" alt="">
@@ -217,7 +217,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 @import '~flickity/dist/flickity.min.css';
 .carousel-cell {
@@ -236,5 +236,8 @@ export default {
 }
 .flickity-resize .carousel-cell {
     min-height: 100%;
+}
+.flickity-viewport {
+    height: 100%;
 }
 </style>
