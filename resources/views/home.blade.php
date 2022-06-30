@@ -33,13 +33,13 @@
         </div>
 
         <div class="md:text-center md:col-start-5 md:col-end-7 order-first md:order-none">
-            <h4 id="winton-link" class="text-white text-2xl inline-block">
+            <h4 id="winton-link" class="text-white text-xl inline-block">
                 <a href="{{ route('location','wintondale') }}" class="pl-4">{{ __('Wintondale') }}</a>
             </h4>
         </div>
 
         <div class="text-right md:text-center md:col-start-5 md:col-end-7 order-last md:order-none">
-            <h4 id="argentine-link" class="text-white text-2xl inline-block">
+            <h4 id="argentine-link" class="text-white text-xl inline-block">
                 <a href="{{ route('location','argentine') }}" class="pl-4">{{ __('Argentine') }}</a>
             </h4>
         </div>

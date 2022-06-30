@@ -20,7 +20,7 @@
                     </button>
                 </div>
                 <nav class="hidden md:flex space-x-10 items-end">
-                    <ul class="flex text-roman pb-2">
+                    <ul class="flex text-roman pb-2 md:mr-8">
                         @foreach(Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                             <li>
                                 <a
