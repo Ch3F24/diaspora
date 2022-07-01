@@ -15,7 +15,7 @@
 {{--            @endforeach--}}
 {{--        </div>--}}
 {{--    </section>--}}
-    <section class="max-w-7xl mx-auto px-8 sm:px-16 illustration-box relative grid grid-cols-3 grid-flow-row auto-rows-max md:grid-cols-7 md:grid-rows-6 h-full my-6 gap-x-4 max-h-[80vh]" id="section">
+    <section class="max-w-7xl mx-auto px-8 sm:px-16 illustration-box relative grid grid-cols-3 grid-flow-row auto-rows-max md:grid-cols-7 md:grid-rows-6 h-full my-6 gap-x-4 max-h-[70vh]" id="section">
         <div class="col-span-full md:col-span-4 md:row-span-full my-12 min-h-[350px] md:max-h-[450px] lg:max-h-full" id="container">
 {{--            <div id="info">Description</div>--}}
 {{--            @include('svg/house')--}}
