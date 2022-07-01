@@ -21,6 +21,7 @@
         "laravel-mix-svg-vue": "^0.4.1",
         "leader-line": "^1.0.7",
         "tailwindcss": "^3.0.24",
+        "three": "^0.142.0",
         "vue": "^3.2.33",
         "vue-flickity": "^1.2.1"
     }

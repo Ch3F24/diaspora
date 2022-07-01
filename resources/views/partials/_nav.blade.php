@@ -1,4 +1,4 @@
-<div class="bg-midnight sticky top-0 z-10" x-data="{ open: false }" @scroll.window="atTop = (window.pageYOffset > 20 ? false : true)" :class="{ 'shadow-md' : !atTop }">
+<div class="bg-midnight sticky top-0 z-10" x-data="{ open: false }" @scroll.window="atTop = (window.pageYOffset > 20 ? false : true)">
     <div class="max-w-7xl mx-auto px-8 sm:px-16">
         <div class="flex justify-between items-center border-b border-white md:border-none py-6">
             <div class="flex justify-start md:order-last md:ml-8 md:pt-8 md:w-5/12">
@@ -76,9 +76,9 @@
                         <a href="{{ route('location','wintondale') }}" class="-m-3 p-3 flex items-center rounded-md">
                             <span class="text-base font-medium text-roman hover:text-midnight">{{ __('Wintondale') }}</span>
                         </a>
-                        <a href="{{ route('location','argentine') }}" class="-m-3 p-3 flex items-center rounded-md">
-                            <span class="text-base font-medium text-roman hover:text-midnight">{{ __('Argentine') }}</span>
-                        </a>
+{{--                        <a href="{{ route('location','argentine') }}" class="-m-3 p-3 flex items-center rounded-md">--}}
+{{--                            <span class="text-base font-medium text-roman hover:text-midnight">{{ __('Argentine') }}</span>--}}
+{{--                        </a>--}}
 
                         <ul class="flex text-roman pb-2">
                             @foreach(Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)

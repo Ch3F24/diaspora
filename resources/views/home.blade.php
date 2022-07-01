@@ -38,10 +38,13 @@
             </h4>
         </div>
 
-        <div class="text-right md:text-center md:col-start-5 md:col-end-7 order-last md:order-none">
-            <h4 id="argentine-link" class="text-white text-xl inline-block">
-                <a href="{{ route('location','argentine') }}" class="pl-4">{{ __('Argentine') }}</a>
-            </h4>
-        </div>
+{{--        <div class="text-right md:text-center md:col-start-5 md:col-end-7 order-last md:order-none">--}}
+{{--            <h4 id="argentine-link" class="text-white text-xl inline-block">--}}
+{{--                <a href="{{ route('location','argentine') }}" class="pl-4">{{ __('Argentine') }}</a>--}}
+{{--            </h4>--}}
+{{--        </div>--}}
     </section>
+@endsection
+@section('assets')
+{{--    <script src="{{mix('js/house.js')}}"></script>--}}
 @endsection
