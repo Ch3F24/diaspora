@@ -9,13 +9,14 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import {vector} from "three/examples/jsm/nodes/core/NodeBuilder";
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
+import {SVGLoader} from "three/examples/jsm/loaders/SVGLoader";
 // import decor from 'three/examples/js/libs/draco/gltf'
 
 
-let mixer, labelRenderer;
+let mixer, labelRenderer,endPath1;
 
 // let shape1;
-const section = document.getElementById('section')
+const section = document.getElementById('section');
 const clock = new THREE.Clock();
 const container = document.getElementById( 'container' );
 // const stats = new Stats();
@@ -41,31 +42,52 @@ controls.target.set( 0, 0.5, 0 );
 controls.update();
 controls.enableZoom = false;
 controls.enablePan = false;
-controls.enableDamping = true;
+controls.enableDamping = false;
+
 
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath( '/3d/gltf/' );
 
 const loader = new GLTFLoader();
+const svgLoader = new SVGLoader();
 loader.setDRACOLoader( dracoLoader );
-const geometry = new THREE.SphereGeometry( 5, 50, 6 );
+// const geometry = new THREE.SphereGeometry( 5, 50, 6 );
 // const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
 
 const points = [];
-
-
+// let points;
+// const raycaster = new THREE.Raycaster();
+// const pointer = new THREE.Vector2();
 // const sphere = ;
+// const group = new THREE.Group();
+const equipments = [];
 
 
-// loader.load( '/3d/LittlestTokyo.glb', function ( gltf ) {
-loader.load( '/3d/wintondale.gltf', function ( gltf ) {
+loader.load( '/3d/scene.gltf', function ( gltf ) {
 
     const model = gltf.scene;
-    model.children[0].material.color = new THREE.Color('#DA6C56')
-    console.log()
+    // points = model.children[0].children[0].children
+    model.children[0].children[0].visible = false
+    // console.log(points)
+    // model.children[0].children[7].material.opacity = .5
+    // model.children[0].children[6].visible = false
+    model.children[0].children[2].material.blending = THREE.AdditiveBlending
+    model.children[0].children[2].material.emissive = new THREE.Color('#150604')
+    model.children[0].children[2].material.emissiveIntensity = 0.01
+    model.children[0].children[2].material.color = new THREE.Color('#150604')
+    model.children[0].children[2].material.trans = new THREE.Color('#100402')
+    model.children[0].children[2].material.transparent = true
+    // model.children[0].children[7].material.opacity = 0.02
+
+
+    // model.children[7].material.opacity = .5
+    // model.children[0].material.color = new THREE.Color('#DA6C56')
+    const geometry = new THREE.SphereGeometry( 5, 50, 6 );
+    //
     for (let i = 0; i < 6; i++) {
-        let sphere = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { color: '#DA6C56' } ))
+        let sphere = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { color: '#FFFFFF' } ))
         points.push(sphere)
+        sphere.updateMatrixWorld()
         model.add( sphere );
     }
     points[0].position.set(60,160,120) // front top
@@ -75,33 +97,22 @@ loader.load( '/3d/wintondale.gltf', function ( gltf ) {
     points[4].position.set(60,160,-100) // front top
     points[5].position.set(-80,20,-120) // back bottom
 
-    points[0].layers.enableAll();
-
-    // const earthDiv = document.createElement( 'div' );
-    // earthDiv.className = 'label';
-    // earthDiv.textContent = 'Earth';
-    // earthDiv.style.marginTop = '-1em';
-    // earthDiv.style.color = '#ffffff';
-    // const earthLabel = new CSS2DObject( earthDiv );
-    // earthLabel.position.set( 0, 0, 0 );
-    // model.add( earthLabel );
-    // earthLabel.layers.set( 0 );
-
-    // labelRenderer = new CSS2DRenderer();
-    // labelRenderer.setSize( section.offsetWidth, section.offsetHeight );
-    // labelRenderer.domElement.style.position = 'absolute';
-    // labelRenderer.domElement.style.top = '0px';
-    // labelRenderer.domElement.style.zIndex = '-1';
-    // section.appendChild( labelRenderer.domElement );
-
-    // shape1 = nestedObjecttoScreenXYZ(sphere,camera,renderer.domElement.width,renderer.domElement.height)
-
-
-    model.position.set( 0, -1, 0 );
-    model.scale.set( 0.012, 0.012, 0.012 );
+    model.position.set( 0, -1.4, 0 );
+    model.scale.set( 0.014, 0.014, 0.014 );
     scene.add( model );
     mixer = new THREE.AnimationMixer( model );
+    scene.updateMatrixWorld(true);
 
+    const svgMarkup = document.querySelector('svg').outerHTML;
+    // const svgLoader = new THREE.SVGLoader();
+    const svgData = svgLoader.parse(svgMarkup);
+
+    const equipmentsUrl = ['/svg/cash_register.svg','/svg/bicaj.svg','/svg/demizson.svg','/svg/szecskazo.svg','/svg/mosodeszka.svg','/svg/enekeskonyv.svg']
+
+    equipmentsUrl.forEach((equipment,i) => {
+        // console.log(loadSvg(equipment,model))
+        equipments.push(loadSvg(equipment,model,i));
+    })
     animate();
     // window.addEventListener( 'resize', onWindowResize );
 
@@ -110,6 +121,8 @@ loader.load( '/3d/wintondale.gltf', function ( gltf ) {
     console.error( e );
 
 } );
+
+
 window.onresize = function () {
     console.log('resize')
     camera.aspect = container.offsetWidth / container.offsetHeight;
@@ -124,10 +137,11 @@ function animate() {
     requestAnimationFrame( animate );
 
     const delta = clock.getDelta();
+    let v = new THREE.Vector3();
 
-    mixer.update( delta );
-
-    controls.update();
+    equipments.forEach(equipment => {
+        equipment.lookAt(camera.getWorldPosition(v))
+    })
 
     renderer.render( scene, camera );
     // labelRenderer.render( scene, camera );
@@ -167,12 +181,106 @@ function animate() {
 
     for (var i = 0; i < links.length; i++) {
         links[i].addEventListener('mouseover', function (event) {
-            points[event.target.id].material.color = new THREE.Color('#FFFFFF')
-            points[event.target.id].scale.setScalar(1.7)
+            points[event.target.getAttribute("data-cat")].visible = false
+            equipments[event.target.getAttribute("data-cat")].visible = true
         })
         links[i].addEventListener('mouseleave', function (event) {
-            points[event.target.id].material.color = new THREE.Color('#DA6C56')
-            points[event.target.id].scale.setScalar(1)
-
+            points[event.target.getAttribute("data-cat")].visible = true
+            equipments[event.target.getAttribute("data-cat")].visible = false
         })
 }
+
+// function getScreenTranslation(obj, renderer, camera) {
+//     var vector = new THREE.Vector3();
+//     var widthHalf = 0.5 * renderer.domElement.width;
+//     var heightHalf = 0.5 * renderer.domElement.height;
+//
+//     vector.setFromMatrixPosition(obj.matrixWorld);
+//     vector.project(camera);
+//     vector.x = vector.x * widthHalf + widthHalf;
+//     vector.y = -(vector.y * heightHalf) + heightHalf;
+//     return {
+//         x: vector.x,
+//         y: vector.y
+//     };
+// };
+//     let line;
+// let startPath = document.querySelector('#cat-0');
+//
+// startPath.addEventListener('mouseover',function () {
+    // group.visible = true
+//     // console.log(endPath1)
+//     line = new LeaderLine(startPath,LeaderLine.pointAnchor({x: 586, y: 727}),{
+//         startPlug: 'behind',
+//         endPlug: 'disc',
+//         endPlugSize: 5,
+//         color: 'white',
+//         size: 1,
+//         hoverStyle: {color:'red'},
+//     })
+// })
+
+controls.addEventListener( 'change', function () {
+    // let v = new THREE.Vector3();
+    // group.lookAt(camera.getWorldPosition(v))
+    // group.rotateY(Math.atan2( ( camera.position.x - group.position.x ), ( camera.position.z - group.position.z ) ))
+} );
+
+function loadSvg(url,model,i) {
+    const group = new THREE.Group();
+
+    svgLoader.load(
+        // resource URL
+        url,
+        // called when the resource is loaded
+        function ( data ) {
+            const paths = data.paths;
+
+            for ( let i = 0; i < paths.length; i ++ ) {
+
+                const path = paths[ i ];
+
+                const material = new THREE.MeshBasicMaterial( {
+                    color: path.color,
+                    side: THREE.DoubleSide,
+                    depthWrite: false
+                } );
+
+                const shapes = SVGLoader.createShapes( path );
+
+                for ( let j = 0; j < shapes.length; j ++ ) {
+
+                    const shape = shapes[ j ];
+                    const geometry = new THREE.ShapeGeometry( shape );
+                    const mesh = new THREE.Mesh( geometry, material );
+                    group.add( mesh );
+
+                }
+            }
+            // group.scale.y *= -1;
+            group.scale.set(.13, -.13)
+            // group.position.set(40,180,120)
+            group.position.set(points[i].position.x ,points[i].position.y,points[i].position.z)
+            // group.position = points[i].position
+            group.visible = false
+            model.add( group );
+
+
+        },
+        // called when loading is in progresses
+        function ( xhr ) {
+
+            console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+        },
+        // called when loading has errors
+        function ( error ) {
+
+            console.log( 'An error happened' );
+
+        }
+    );
+    return group;
+}
+
+

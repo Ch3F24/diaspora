@@ -1,4 +1,4 @@
-<div class="bg-midnight sticky top-0 z-10" x-data="{ open: false }" @scroll.window="atTop = (window.pageYOffset > 20 ? false : true)">
+<div class="sticky top-0 z-10" x-data="{ open: false }" @scroll.window="atTop = (window.pageYOffset > 20 ? false : true)">
     <div class="max-w-7xl mx-auto px-8 sm:px-16">
         <div class="flex justify-between items-center border-b border-white md:border-none py-6">
             <div class="flex justify-start md:order-last md:ml-8 md:pt-8 md:w-5/12">
