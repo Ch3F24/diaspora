@@ -61,22 +61,24 @@ const points = [];
 // const sphere = ;
 // const group = new THREE.Group();
 const equipments = [];
+let p;
 
-
-loader.load( '/3d/scene.gltf', function ( gltf ) {
+loader.load( '/3d/wintondale.gltf', function ( gltf ) {
 
     const model = gltf.scene;
+    console.log(model)
     // points = model.children[0].children[0].children
-    model.children[0].children[0].visible = false
+    // model.children[0].children[0].visible = false
     // console.log(points)
     // model.children[0].children[7].material.opacity = .5
     // model.children[0].children[6].visible = false
-    model.children[0].children[2].material.blending = THREE.AdditiveBlending
-    model.children[0].children[2].material.emissive = new THREE.Color('#150604')
-    model.children[0].children[2].material.emissiveIntensity = 0.01
-    model.children[0].children[2].material.color = new THREE.Color('#150604')
-    model.children[0].children[2].material.trans = new THREE.Color('#100402')
-    model.children[0].children[2].material.transparent = true
+    // model.children[0].children[2].material.blending = THREE.AdditiveBlending
+    // model.children[0].children[2].material.emissive = new THREE.Color('#150604')
+    // model.children[0].children[2].material.emissiveIntensity = 0.01
+    // model.children[0].children[2].material.color = new THREE.Color('#150604')
+    model.children[0].material.color = new THREE.Color('#DA6C56')
+    // model.children[0].children[2].material.trans = new THREE.Color('#100402')
+    // model.children[0].children[2].material.transparent = true
     // model.children[0].children[7].material.opacity = 0.02
 
 
@@ -97,6 +99,8 @@ loader.load( '/3d/scene.gltf', function ( gltf ) {
     points[4].position.set(60,160,-100) // front top
     points[5].position.set(-80,20,-120) // back bottom
 
+    // points[0].material.color = new THREE.Color('#150604')
+
     model.position.set( 0, -1.4, 0 );
     model.scale.set( 0.014, 0.014, 0.014 );
     scene.add( model );
@@ -109,11 +113,16 @@ loader.load( '/3d/scene.gltf', function ( gltf ) {
 
     const equipmentsUrl = ['/svg/cash_register.svg','/svg/bicaj.svg','/svg/demizson.svg','/svg/szecskazo.svg','/svg/mosodeszka.svg','/svg/enekeskonyv.svg']
 
-    equipmentsUrl.forEach((equipment,i) => {
-        // console.log(loadSvg(equipment,model))
-        equipments.push(loadSvg(equipment,model,i));
-    })
+    // equipmentsUrl.forEach((equipment,i) => {
+    //     // console.log(loadSvg(equipment,model))
+    //     equipments.push(loadSvg(equipment,model,i));
+    // })
+
     animate();
+    scene.updateMatrixWorld();
+    points[0].parent.updateMatrixWorld();
+    // console.log(renderer.domElement.width)
+
     // window.addEventListener( 'resize', onWindowResize );
 
 }, undefined, function ( e ) {
@@ -139,42 +148,46 @@ function animate() {
     const delta = clock.getDelta();
     let v = new THREE.Vector3();
 
-    equipments.forEach(equipment => {
-        equipment.lookAt(camera.getWorldPosition(v))
-    })
+    // equipments.forEach(equipment => {
+    //     equipment.lookAt(camera.getWorldPosition(v))
+    // })
 
     renderer.render( scene, camera );
+    // p = nestedObjecttoScreenXYZ(points[0],camera,renderer.domElement.width,renderer.domElement.height,true);
+    // console.log(screenpos)
     // labelRenderer.render( scene, camera );
 
 }
 
 
-// function onPointerMove( event ) {
-//
-//     // calculate pointer position in normalized device coordinates
-//     // (-1 to +1) for both components
-//
-//     pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-//     pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-//     console.log(pointer)
-//
-// }
+function onPointerMove( event ) {
 
-// window.addEventListener( 'pointermove', onPointerMove );
+    // calculate pointer position in normalized device coordinates
+    // (-1 to +1) for both components
 
-// function nestedObjecttoScreenXYZ(obj,camera,width,height)
-// {
-//     var vector = new THREE.Vector3();
-//     vector.setFromMatrixPosition( obj.matrixWorld );
-//     var widthHalf = (width/2);
-//     var heightHalf = (height/2);
-//     vector.project(camera);
-//     vector.x = ( vector.x * widthHalf ) + widthHalf;
-//     vector.y = - ( vector.y * heightHalf ) + heightHalf;
-//     // vector.x = ( vector.x + 1) * widthHalf;
-//     // vector.y = - ( vector.y - 1) * heightHalf;
-//     return vector;
-// };
+    // pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    // pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    console.log(event.clientX,event.clientY)
+
+}
+
+// window.addEventListener( 'mousemove', onPointerMove );
+
+function screenPos(obj)
+{
+    const vector = new THREE.Vector3();
+    const canvas = renderer.domElement; // `renderer` is a THREE.WebGLRenderer
+
+    obj.updateMatrixWorld();  // `obj´ is a THREE.Object3D
+    vector.setFromMatrixPosition(obj.matrixWorld);
+
+    vector.project(camera); // `camera` is a THREE.PerspectiveCamera
+    const canvasPosition = canvas.getBoundingClientRect();
+    vector.x = canvasPosition.x + Math.round((0.5 + vector.x / 2) * (canvas.width / window.devicePixelRatio));
+    vector.y = canvasPosition.y + Math.round((0.5 - vector.y / 2) * (canvas.height / window.devicePixelRatio));
+    return vector
+}
+
 // function pointsHover() {
     var links = document.getElementsByClassName('category-link');
         // console.log(Object.entries(links))
@@ -182,35 +195,34 @@ function animate() {
     for (var i = 0; i < links.length; i++) {
         links[i].addEventListener('mouseover', function (event) {
             points[event.target.getAttribute("data-cat")].visible = false
-            equipments[event.target.getAttribute("data-cat")].visible = true
+            // equipments[event.target.getAttribute("data-cat")].visible = true
+            let po = screenPos(points[event.target.getAttribute("data-cat")]);
+            line = new LeaderLine(event.target,LeaderLine.pointAnchor({x: po.x, y: po.y}),{
+                startPlug: 'behind',
+                endPlug: 'disc',
+                endPlugSize: 5,
+                color: 'white',
+                size: 1.5,
+                endPlugColor: '#DA6C56',
+                hoverStyle: {color:'red'},
+            })
+            // line.end = LeaderLine.pointAnchor({x: 200, y: 300})
         })
         links[i].addEventListener('mouseleave', function (event) {
             points[event.target.getAttribute("data-cat")].visible = true
-            equipments[event.target.getAttribute("data-cat")].visible = false
+            // equipments[event.target.getAttribute("data-cat")].visible = false
+            line.remove()
         })
 }
 
-// function getScreenTranslation(obj, renderer, camera) {
-//     var vector = new THREE.Vector3();
-//     var widthHalf = 0.5 * renderer.domElement.width;
-//     var heightHalf = 0.5 * renderer.domElement.height;
-//
-//     vector.setFromMatrixPosition(obj.matrixWorld);
-//     vector.project(camera);
-//     vector.x = vector.x * widthHalf + widthHalf;
-//     vector.y = -(vector.y * heightHalf) + heightHalf;
-//     return {
-//         x: vector.x,
-//         y: vector.y
-//     };
-// };
-//     let line;
+
+let line;
 // let startPath = document.querySelector('#cat-0');
 //
 // startPath.addEventListener('mouseover',function () {
-    // group.visible = true
+//     // group.visible = true
 //     // console.log(endPath1)
-//     line = new LeaderLine(startPath,LeaderLine.pointAnchor({x: 586, y: 727}),{
+//     line = new LeaderLine(startPath,LeaderLine.pointAnchor({x: p.x, y: p.y}),{
 //         startPlug: 'behind',
 //         endPlug: 'disc',
 //         endPlugSize: 5,
@@ -219,12 +231,6 @@ function animate() {
 //         hoverStyle: {color:'red'},
 //     })
 // })
-
-controls.addEventListener( 'change', function () {
-    // let v = new THREE.Vector3();
-    // group.lookAt(camera.getWorldPosition(v))
-    // group.rotateY(Math.atan2( ( camera.position.x - group.position.x ), ( camera.position.z - group.position.z ) ))
-} );
 
 function loadSvg(url,model,i) {
     const group = new THREE.Group();
