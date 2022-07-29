@@ -27,13 +27,13 @@
 {{--        </div>--}}
 {{--    </section>--}}
 
-    <section class="max-w-7xl mx-auto px-8 sm:px-16 illustration-box relative grid grid-cols-1 grid-flow-row auto-rows-max md:grid-cols-7 md:grid-rows-6 h-full my-6 gap-x-4">
+    <section class="max-w-7xl mx-auto px-8 illustration-box relative grid grid-cols-1 grid-flow-row auto-rows-max md:grid-cols-7 md:grid-rows-6 h-full my-6 gap-x-4">
         <div class="col-span-full md:col-span-4 md:row-span-full my-12">
             @include('svg/globe')
         </div>
 
         <div class="md:text-center md:col-start-5 md:col-end-7 order-first md:order-none">
-            <h4 id="winton-link" class="text-white text-xl inline-block">
+            <h4 id="winton-link" class="text-white text-xl inline-block font-light">
                 <a href="{{ route('location','wintondale') }}" class="pl-4">{{ __('Wintondale') }}</a>
             </h4>
         </div>

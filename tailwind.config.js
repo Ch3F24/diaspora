@@ -12,7 +12,7 @@ module.exports = {
         extend: {
             colors: {
                 'midnight': '#001228',
-                'roman': '#DA6C56'
+                'roman': '#ff6460'
             },
             fontFamily: {
                 sans: ['Helvetica','sans-serif'],

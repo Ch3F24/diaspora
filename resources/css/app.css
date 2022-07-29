@@ -78,20 +78,30 @@
 
 }
 
+.slider .flickity-prev-next-button.next,
+.slider .flickity-prev-next-button.previous {
+    top: 50%;
+}
+
 @media (min-width: 1024px) {
     .flickity-viewport {
         margin-bottom: 0;
     }
     .slider .flickity-prev-next-button.next {
-        right: -60px!important;
+        /*right: -60px!important;*/
+        right: 15px!important;
         top: 50%;
     }
     .slider .flickity-prev-next-button.previous {
-        left: -60px!important;
+        left: -15px!important;
         top: 50%;
     }
 }
 body {
     background-image: url("../images/bg.jpg");
     background-size: cover;
+}
+
+nav a.active {
+    @apply text-white;
 }

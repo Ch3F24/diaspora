@@ -24,7 +24,8 @@ const leaderLineStyle = {
     endPlug: 'disc',
     endPlugSize: 5,
     color: 'white',
-    size: 1
+    size: 1,
+    path: 'straight'
 }
 
 function drawLine() {

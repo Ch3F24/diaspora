@@ -1,12 +1,12 @@
-<div class="sticky top-0 z-10" x-data="{ open: false }" @scroll.window="atTop = (window.pageYOffset > 20 ? false : true)">
-    <div class="max-w-7xl mx-auto px-8 sm:px-16">
-        <div class="flex justify-between items-center border-b border-white md:border-none py-6">
-            <div class="flex justify-start md:order-last md:ml-8 md:pt-8 md:w-5/12">
+<div class="sticky top-0 z-10 transition-colors duration-300" x-data="{ open: false,showBar: false }"  :class="{ 'bg-midnight bg-opacity-80 shadow ' : showBar }" @scroll.window="showBar = window.pageYOffset > 20 ? true : false">
+    <div class="max-w-7xl mx-auto px-8">
+        <div class="flex justify-between border-b border-white md:border-none py-6 md:pt-8">
+            <div class="flex justify-start md:order-last md:w-5/12">
                 <a href="{{route('home')}}">
                     <p class="text-2xl md:text-5xl text-roman">{{ $page_title ? $page_title : 'Magyarok /n a nagyvilágban'}}</p>
                 </a>
             </div>
-            <div class="flex justify-between items-center md:border-b md:border-white md:justify-start md:w-7/12">
+            <div class="flex justify-between items-start pt-1.5 md:justify-start md:w-7/12 md:pr-8">
                 <div class="-mr-2 -my-2 md:hidden" x-on:click="open = true">
                     <button type="button"
                             class="p-2 inline-flex rounded-md items-center justify-center text-white hover:bg-roman focus:outline-none focus:ring-0"
@@ -19,8 +19,13 @@
                         </svg>
                     </button>
                 </div>
-                <nav class="hidden md:flex space-x-10 items-end">
-                    <ul class="flex text-roman pb-2 md:mr-8">
+                <nav class="hidden md:flex space-x-10 items-center">
+                    <a href="{{ url()->previous() }}" class="text-roman">
+                        <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 60,95 L 15,50  L 60,5 L 60,0 Z" class="arrow"></path></svg>
+                    </a>
+                    <a href="/" class="text-lg font-light text-roman hover:text-white transition-color uppercase {{ currentPage('home') }}">{{ __('Globe') }}</a>
+                    <a href="{{ route('location','wintondale') }}" class="text-lg font-light text-roman hover:text-white transition-color uppercase {{ currentPage('wintondale',true) }}">{{ __('Wintondale') }}</a>
+                    <ul class="flex text-roman md:mr-8">
                         @foreach(Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                             <li>
                                 <a
@@ -28,14 +33,13 @@
                                     hreflang="{{ $localeCode }}"
                                     @class([
                                         'text-white' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::getCurrentLocale() == $localeCode,
-                                        "after:content-['|'] after:mx-2 after:text-roman flex" => $localeCode == 'hu','hover:text-white transition-color font-light text-xl'])
+                                        "after:content-['|'] after:mx-2 after:text-roman after:leading-[1.1] after:my-auto flex" => $localeCode == 'hu','hover:text-white transition-color font-light text-lg'])
                                     href="{{ Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                                     {{ strtoupper($localeCode) }}
                                 </a>
                             </li>
                         @endforeach
                     </ul>
-                    <a href="{{ route('location','wintondale') }}" class="text-xl font-light text-roman hover:text-white transition-color pb-2">{{ __('Wintondale') }}</a>
 {{--                    <a href="{{ route('location','argentine') }}" class="text-xl font-light text-roman hover:text-white transition-color pb-2">{{ __('Argentine') }}</a>--}}
                 </nav>
             </div>

@@ -17,7 +17,7 @@
 {{--    </section>--}}
 
 {{--    <section class="max-w-7xl mx-auto px-8 sm:px-16 illustration-box relative grid grid-cols-3 grid-flow-row auto-rows-max md:grid-cols-7 md:grid-rows-6 h-full my-6 gap-x-4 max-h-[70vh]" id="section">--}}
-    <section class="max-w-7xl mx-auto px-8 sm:px-16 illustration-box relative grid grid-flow-row auto-rows-max grid-cols-3 md:grid-cols-2 h-full my-6 gap-x-4 max-h-[60vh]" id="section">
+    <section class="max-w-7xl mx-auto px-8 illustration-box relative grid grid-flow-row auto-rows-max grid-cols-3 md:grid-cols-2 h-full my-6 gap-x-4 max-h-[60vh]" id="section">
 {{--        <div class="col-span-full md:col-span-4 md:row-span-full my-12 min-h-[350px] md:max-h-[450px] lg:max-h-full" id="container">--}}
 {{--        <div class="col-span-full md:col-span-4 md:row-span-full min-h-[350px] md:max-h-[450px] lg:max-h-full" id="container">--}}
         <div class="col-span-full md:col-span-1 md:row-span-full min-h-[50vh] md:min-h-[60vh] lg:max-h-full my-12 md:my-0" id="container">
@@ -30,7 +30,7 @@
                 <div class="text-center md:col-start-5 md:col-end-8 @if($key <= 2) order-first md:order-none @endif">
 {{--                    <h4 id="cat-{{ $key }}" class="text-white lg:text-2xl inline-block category-link">--}}
 {{--                    <h4 id="cat-{{ $key }}" class="text-white lg:text-2xl inline-block">--}}
-                    <h4 data-cat="cat-{{ $key }}"  class="text-white lg:text-xl inline-block">
+                    <h4 data-cat="cat-{{ $key }}"  class="text-white lg:text-xl inline-block font-light">
                         <a href="{{ route('category',['location' => $category->location,'slug' => $category->slug]) }}" data-cat="{{ $key }}" class="lg:pl-4 hover:text-roman category-link">{{ $category->title }}</a>
                     </h4>
                 </div>
@@ -41,7 +41,7 @@
             <div class="md:hidden text-center md:col-start-5 md:col-end-8 @if($key <= 2) order-first md:order-none @endif">
                 {{--                    <h4 id="cat-{{ $key }}" class="text-white lg:text-2xl inline-block category-link">--}}
                 {{--                    <h4 id="cat-{{ $key }}" class="text-white lg:text-2xl inline-block">--}}
-                <h4 data-cat="cat-{{ $key }}"  class="text-white lg:text-xl inline-block">
+                <h4 data-cat="cat-{{ $key }}"  class="text-white lg:text-xl inline-block font-light">
                     <a href="{{ route('category',['location' => $category->location,'slug' => $category->slug]) }}" data-cat="{{ $key }}" class="lg:pl-4 hover:text-roman category-link">{{ $category->title }}</a>
                 </h4>
             </div>

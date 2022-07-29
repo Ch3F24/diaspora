@@ -200,11 +200,12 @@ function screenPos(obj)
             line = new LeaderLine(event.target,LeaderLine.pointAnchor({x: po.x, y: po.y}),{
                 startPlug: 'behind',
                 endPlug: 'disc',
-                endPlugSize: 5,
+                endPlugSize: 8,
                 color: 'white',
                 size: 1.5,
                 endPlugColor: '#DA6C56',
                 hoverStyle: {color:'red'},
+                path: 'straight'
             })
             // line.end = LeaderLine.pointAnchor({x: 200, y: 300})
         })
