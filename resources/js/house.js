@@ -9,7 +9,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import {vector} from "three/examples/jsm/nodes/core/NodeBuilder";
 import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
-import {SVGLoader} from "three/examples/jsm/loaders/SVGLoader";
+// import {SVGLoader} from "three/examples/jsm/loaders/SVGLoader";
 // import decor from 'three/examples/js/libs/draco/gltf'
 
 
@@ -49,14 +49,17 @@ const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath( '/3d/gltf/' );
 
 const loader = new GLTFLoader();
-const svgLoader = new SVGLoader();
+// const svgLoader = new SVGLoader();
 loader.setDRACOLoader( dracoLoader );
 // const geometry = new THREE.SphereGeometry( 5, 50, 6 );
 // const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
 
 const points = [];
 // let points;
-// const raycaster = new THREE.Raycaster();
+let raycaster = new THREE.Raycaster();
+let INTERSECTED, INTERSECTEDLINE;
+const pointer = new THREE.Vector2();
+
 // const pointer = new THREE.Vector2();
 // const sphere = ;
 // const group = new THREE.Group();
@@ -66,7 +69,7 @@ let p;
 loader.load( '/3d/wintondale.gltf', function ( gltf ) {
 
     const model = gltf.scene;
-    console.log(model)
+    const group = new THREE.Group();
     // points = model.children[0].children[0].children
     // model.children[0].children[0].visible = false
     // console.log(points)
@@ -88,9 +91,11 @@ loader.load( '/3d/wintondale.gltf', function ( gltf ) {
     //
     for (let i = 0; i < 6; i++) {
         let sphere = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { color: '#FFFFFF' } ))
+        sphere.name = i;
         points.push(sphere)
         sphere.updateMatrixWorld()
-        model.add( sphere );
+        // model.add( sphere );
+        group.add( sphere );
     }
     points[0].position.set(60,160,120) // front top
     points[1].position.set(40,50,120) // front bottom
@@ -99,6 +104,7 @@ loader.load( '/3d/wintondale.gltf', function ( gltf ) {
     points[4].position.set(60,160,-100) // front top
     points[5].position.set(-80,20,-120) // back bottom
 
+    model.add(group)
     // points[0].material.color = new THREE.Color('#150604')
 
     model.position.set( 0, -1.4, 0 );
@@ -107,23 +113,24 @@ loader.load( '/3d/wintondale.gltf', function ( gltf ) {
     mixer = new THREE.AnimationMixer( model );
     scene.updateMatrixWorld(true);
 
-    const svgMarkup = document.querySelector('svg').outerHTML;
+    // const svgMarkup = document.querySelector('svg').outerHTML;
     // const svgLoader = new THREE.SVGLoader();
-    const svgData = svgLoader.parse(svgMarkup);
+    // const svgData = svgLoader.parse(svgMarkup);
 
-    const equipmentsUrl = ['/svg/cash_register.svg','/svg/bicaj.svg','/svg/demizson.svg','/svg/szecskazo.svg','/svg/mosodeszka.svg','/svg/enekeskonyv.svg']
+    // const equipmentsUrl = ['/svg/cash_register.svg','/svg/bicaj.svg','/svg/demizson.svg','/svg/szecskazo.svg','/svg/mosodeszka.svg','/svg/enekeskonyv.svg']
 
     // equipmentsUrl.forEach((equipment,i) => {
     //     // console.log(loadSvg(equipment,model))
     //     equipments.push(loadSvg(equipment,model,i));
     // })
 
+    // window.addEventListener( 'resize', onWindowResize );
+
     animate();
     scene.updateMatrixWorld();
     points[0].parent.updateMatrixWorld();
-    // console.log(renderer.domElement.width)
+    container.addEventListener( 'pointermove', onPointerMove );
 
-    // window.addEventListener( 'resize', onWindowResize );
 
 }, undefined, function ( e ) {
 
@@ -131,9 +138,39 @@ loader.load( '/3d/wintondale.gltf', function ( gltf ) {
 
 } );
 
+function onPointerMove( event ) {
+
+    // calculate pointer position in normalized device coordinates
+    // (-1 to +1) for both components
+
+    // const rect = renderer.domElement.getBoundingClientRect();
+    // const x = event.clientX - rect.left;
+    // const y = event.clientY - rect.top;
+
+    // pointer.x = ( x / renderer.domElement.clientWidth ) *  2 - 1;
+    // pointer.y = ( y / renderer.domElement.clientHeight) * - 2 + 1
+
+    // pointer.x = ( (event.clientX - renderer.domElement.offsetLeft) / renderer.domElement.clientWidth ) * 2 - 1;
+    // pointer.y = ( (event.clientY - renderer.domElement.offsetTop) / renderer.domElement.clientHeight ) * -2 + 1;
+
+    const rect = renderer.domElement.getBoundingClientRect();
+    pointer.x = ( ( event.clientX - rect.left ) / ( rect. right - rect.left ) ) * 2 - 1;
+    pointer.y = - ( ( event.clientY - rect.top ) / ( rect.bottom - rect.top) ) * 2 + 1;
+
+    // pointer.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+    // pointer.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+
+}
+
+// function onPointerMove( event ) {
+//
+//     pointer.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+//     pointer.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+//     console.log(pointer)
+//
+// }
 
 window.onresize = function () {
-    console.log('resize')
     camera.aspect = container.offsetWidth / container.offsetHeight;
     camera.updateProjectionMatrix();
 
@@ -151,27 +188,47 @@ function animate() {
     // equipments.forEach(equipment => {
     //     equipment.lookAt(camera.getWorldPosition(v))
     // })
+    camera.updateMatrixWorld();
+
+
+    raycaster.setFromCamera(pointer, camera);
+
+    let intersects = raycaster.intersectObjects( points );
+
+    if ( intersects.length > 0 ) {
+
+        if ( INTERSECTED !== intersects[ 0 ].object ) {
+
+            INTERSECTED = intersects[ 0 ].object;
+            let target = document.querySelector(`a[data-cat="${INTERSECTED.name}"]`)
+            let po = screenPos(intersects[ 0 ].object);
+            INTERSECTEDLINE = new LeaderLine(target,LeaderLine.pointAnchor({x: po.x, y: po.y}),{
+                startPlug: 'behind',
+                endPlug: 'disc',
+                endPlugSize: 8,
+                color: 'white',
+                size: 1.5,
+                endPlugColor: '#DA6C56',
+                hoverStyle: {color:'red'},
+                path: 'straight'
+            })
+
+            INTERSECTED.material.color = new THREE.Color('#DA6C56');
+        }
+
+    } else {
+        if ( INTERSECTED ) {
+            INTERSECTEDLINE.remove();
+            INTERSECTED.material.color = new THREE.Color('#FFFFFF');
+        }
+
+        INTERSECTED = null;
+
+    }
+
 
     renderer.render( scene, camera );
-    // p = nestedObjecttoScreenXYZ(points[0],camera,renderer.domElement.width,renderer.domElement.height,true);
-    // console.log(screenpos)
-    // labelRenderer.render( scene, camera );
-
 }
-
-
-function onPointerMove( event ) {
-
-    // calculate pointer position in normalized device coordinates
-    // (-1 to +1) for both components
-
-    // pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-    // pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-    console.log(event.clientX,event.clientY)
-
-}
-
-// window.addEventListener( 'mousemove', onPointerMove );
 
 function screenPos(obj)
 {
@@ -218,76 +275,6 @@ function screenPos(obj)
 
 
 let line;
-// let startPath = document.querySelector('#cat-0');
-//
-// startPath.addEventListener('mouseover',function () {
-//     // group.visible = true
-//     // console.log(endPath1)
-//     line = new LeaderLine(startPath,LeaderLine.pointAnchor({x: p.x, y: p.y}),{
-//         startPlug: 'behind',
-//         endPlug: 'disc',
-//         endPlugSize: 5,
-//         color: 'white',
-//         size: 1,
-//         hoverStyle: {color:'red'},
-//     })
-// })
 
-function loadSvg(url,model,i) {
-    const group = new THREE.Group();
-
-    svgLoader.load(
-        // resource URL
-        url,
-        // called when the resource is loaded
-        function ( data ) {
-            const paths = data.paths;
-
-            for ( let i = 0; i < paths.length; i ++ ) {
-
-                const path = paths[ i ];
-
-                const material = new THREE.MeshBasicMaterial( {
-                    color: path.color,
-                    side: THREE.DoubleSide,
-                    depthWrite: false
-                } );
-
-                const shapes = SVGLoader.createShapes( path );
-
-                for ( let j = 0; j < shapes.length; j ++ ) {
-
-                    const shape = shapes[ j ];
-                    const geometry = new THREE.ShapeGeometry( shape );
-                    const mesh = new THREE.Mesh( geometry, material );
-                    group.add( mesh );
-
-                }
-            }
-            // group.scale.y *= -1;
-            group.scale.set(.13, -.13)
-            // group.position.set(40,180,120)
-            group.position.set(points[i].position.x ,points[i].position.y,points[i].position.z)
-            // group.position = points[i].position
-            group.visible = false
-            model.add( group );
-
-
-        },
-        // called when loading is in progresses
-        function ( xhr ) {
-
-            console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-
-        },
-        // called when loading has errors
-        function ( error ) {
-
-            console.log( 'An error happened' );
-
-        }
-    );
-    return group;
-}
 
 
