@@ -28,7 +28,7 @@
             </div>
 
             <p class="uppercase text-roman text-xl font-light" v-if="equipmentTitle">{{ equipmentTitle }}</p>
-            <p class="uppercase text-roman text-lg font-light" v-if="equipmentInventoryNumber">{{ equipmentInventoryNumber }}</p>
+            <p class="uppercase text-roman font-light" v-if="equipmentInventoryNumber">{{ equipmentInventoryNumber }}</p>
             <div class="space-y-4 mt-4 lg:mt-8 mb-8 lg:mb-12">
                 <p v-if="equipmentSubTitle">{{ equipmentSubTitle }}</p>
                 <p v-if="equipmentNews">{{ equipmentNews }}</p>
