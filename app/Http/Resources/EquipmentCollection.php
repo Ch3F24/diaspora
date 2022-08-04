@@ -31,7 +31,8 @@ class EquipmentCollection extends JsonResource
             'news' => $this->news,
             'hunglish' => $this->hunglish,
             'cover' => isset($cover) ? $cover : null,
-            'svg' => $this->svg
+            'svg' => $this->svg,
+            'inventory_number' => $this->inventory_number
         ];
     }
 }

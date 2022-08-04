@@ -27,8 +27,9 @@
                 <p v-if="category.description">{{ category.description }}</p>
             </div>
 
-            <p class="uppercase text-roman text-xl mb-4 lg:mb-8 font-light" v-if="equipmentTitle">{{ equipmentTitle }}</p>
-            <div class="space-y-4 mb-8 lg:mb-12">
+            <p class="uppercase text-roman text-xl font-light" v-if="equipmentTitle">{{ equipmentTitle }}</p>
+            <p class="uppercase text-roman text-lg font-light" v-if="equipmentInventoryNumber">{{ equipmentInventoryNumber }}</p>
+            <div class="space-y-4 mt-4 lg:mt-8 mb-8 lg:mb-12">
                 <p v-if="equipmentSubTitle">{{ equipmentSubTitle }}</p>
                 <p v-if="equipmentNews">{{ equipmentNews }}</p>
             </div>
@@ -220,6 +221,9 @@ export default {
         },
         equipmentHunglish() {
             return this.category.equipments[this.index].hunglish
+        },
+        equipmentInventoryNumber() {
+            return this.category.equipments[this.index].inventory_number
         },
     }
 }
