@@ -24,7 +24,7 @@
                         <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 60,95 L 15,50  L 60,5 L 60,0 Z" class="arrow"></path></svg>
                     </a>
                     <a href="/" class="text-lg font-light text-roman hover:text-white transition-color uppercase {{ currentPage('home') }}">{{ __('Globe') }}</a>
-                    <a href="{{ route('location','wintondale') }}" class="text-lg font-light text-roman hover:text-white transition-color uppercase {{ currentPage('wintondale',true) }}">{{ __('Wintondale') }}</a>
+                    <a href="{{ route('location','wintondale') }}" class="text-lg font-light text-roman hover:text-white transition-color uppercase {{ currentPage('wintondale',true) }}">{{ __('Vintondale') }}</a>
                     <ul class="flex text-roman md:mr-8">
                         @foreach(Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                             <li>

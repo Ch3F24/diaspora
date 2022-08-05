@@ -17,6 +17,7 @@ mix.js('resources/js/app.js', 'public/js')
     .vue()
     .svgVue()
     .js('resources/js/house.js', 'public/js')
+    .js('resources/js/globe.js', 'public/js')
     .copy('node_modules/leader-line/leader-line.min.js','public/js/leader-line.min.js')
     .copyDirectory('resources/fonts','public/fonts')
     .postCss('resources/css/app.css', 'public/css', [

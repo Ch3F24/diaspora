@@ -14,7 +14,7 @@ class PageController extends Controller
     const LOCATION = [
         'wintondale' => [
             'key' => 1,
-            'title' => 'Wintondale'
+            'title' => 'Vintondale'
         ],
         'argentine' => [
             'key' => 2,

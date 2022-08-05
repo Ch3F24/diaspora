@@ -35,7 +35,7 @@
             </div>
 
             <svg-vue icon="hunglish" class="w-28" v-if="equipmentHunglish"></svg-vue>
-
+            <p class="uppercase text-roman font-light mt-4" v-if="equipmentHunglish">Hunglish</p>
             <p v-if="equipmentHunglish" class="text-left">{{ equipmentHunglish }}</p>
         </div>
 
