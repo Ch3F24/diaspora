@@ -1,13 +1,16 @@
 <div class="sticky top-0 z-10 transition-colors duration-300" x-data="{ open: false,showBar: false }"  :class="{ 'bg-midnight bg-opacity-80 shadow ' : showBar }" @scroll.window="showBar = window.pageYOffset > 20 ? true : false">
     <div class="max-w-7xl mx-auto px-8">
-        <div class="flex justify-between border-b border-white md:border-none py-6 md:pt-8">
-            <div class="flex justify-start md:order-last md:w-5/12">
+        <div class="flex justify-between border-b border-white lg:border-none py-6 md:pt-8">
+            <div class="flex justify-start lg:order-last lg:w-5/12">
                 <a href="{{route('home')}}">
-                    <p class="text-2xl md:text-5xl text-roman">{{ $page_title ? $page_title : 'Magyarok /n a nagyvilágban'}}</p>
+                    <p class="text-2xl lg:text-5xl text-roman">{{ $page_title ? $page_title : 'Magyarok /n a nagyvilágban'}}</p>
+                    @if($page_title == 'Vintondale')
+                        <p class="text-xl text-roman mt-8 hidden lg:block">{{ __('sub_title-'. $page_title) }}</p>
+                    @endif
                 </a>
             </div>
-            <div class="flex justify-between items-start pt-1.5 md:justify-start md:w-7/12 md:pr-8">
-                <div class="-mr-2 -my-2 md:hidden" x-on:click="open = true">
+            <div class="flex justify-between items-start pt-1.5 lg:justify-start lg:w-7/12 lg:pr-8">
+                <div class="-mr-2 -my-2 lg:hidden" x-on:click="open = true">
                     <button type="button"
                             class="p-2 inline-flex rounded-md items-center justify-center text-white hover:bg-roman focus:outline-none focus:ring-0"
                             aria-expanded="false">
@@ -19,12 +22,15 @@
                         </svg>
                     </button>
                 </div>
-                <nav class="hidden md:flex space-x-10 items-center">
+                <nav class="hidden lg:flex space-x-10 items-center">
                     <a href="{{ url()->previous() }}" class="text-roman">
                         <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 60,95 L 15,50  L 60,5 L 60,0 Z" class="arrow"></path></svg>
                     </a>
                     <a href="/" class="text-lg font-light text-roman hover:text-white transition-color uppercase {{ currentPage('home') }}">{{ __('Globe') }}</a>
                     <a href="{{ route('location','wintondale') }}" class="text-lg font-light text-roman hover:text-white transition-color uppercase {{ currentPage('wintondale',true) }}">{{ __('Vintondale') }}</a>
+                    @if(\Illuminate\Support\Facades\Route::currentRouteName() === 'location')
+                        <a href="#research" class="text-lg font-light text-roman hover:text-white transition-color uppercase">{{ __('Research') }}</a>
+                    @endif
                     <ul class="flex text-roman md:mr-8">
                         @foreach(Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                             <li>
@@ -48,7 +54,7 @@
     </div>
 
     {{--        Mobile--}}
-    <div class="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+    <div class="absolute top-0 inset-x-0 p-2 transition transform origin-top-right lg:hidden"
          x-show="open"
          x-transition:enter="transition ease-out duration-200"
          x-transition:enter-start="opacity-0 translate-y-1"
@@ -77,9 +83,17 @@
                 </div>
                 <div class="mt-6">
                     <nav class="grid gap-y-6">
+                        <a href="/" class="-m-3 p-3 flex items-center rounded-md">
+                            <span class="text-base font-medium text-roman hover:text-midnight">{{ __('Globe') }}</span>
+                        </a>
                         <a href="{{ route('location','wintondale') }}" class="-m-3 p-3 flex items-center rounded-md">
                             <span class="text-base font-medium text-roman hover:text-midnight">{{ __('Wintondale') }}</span>
                         </a>
+                        @if(\Illuminate\Support\Facades\Route::currentRouteName() === 'location')
+                            <a href="#research" class="-m-3 p-3 flex items-center rounded-md">
+                                <span class="text-base font-medium text-roman hover:text-midnight">{{ __('Research') }}</span>
+                            </a>
+                        @endif
 {{--                        <a href="{{ route('location','argentine') }}" class="-m-3 p-3 flex items-center rounded-md">--}}
 {{--                            <span class="text-base font-medium text-roman hover:text-midnight">{{ __('Argentine') }}</span>--}}
 {{--                        </a>--}}

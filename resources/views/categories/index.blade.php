@@ -1,15 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="max-w-7xl mx-auto px-8">
-        @if($page_title === 'Vintondale')
-            <div class="hidden md:flex md:w-5/12">
-                <img src="{{ asset('images/kisalaprajz.svg') }}" alt="Logo" width="100" class="ml-20 mr-4">
-                <p class="uppercase font-light text-roman text-sm">A vintondalei<br> ház szerkezeti<br> rajza</p>
-            </div>
-        @endif
-    </div>
-    <section class="max-w-7xl mx-auto px-8 illustration-box relative grid grid-flow-row auto-rows-max grid-cols-3 md:grid-cols-2 h-full my-6 gap-x-4 max-h-[60vh]" id="section">
+    @if($page_title === 'Vintondale')
+        <section class="max-w-7xl mx-auto px-8 mt-8 lg:-mt-12">
+                <div class="hidden md:flex md:w-5/12">
+                    <img src="{{ asset('images/kisalaprajz.svg') }}" alt="Logo" width="100" class="lg:ml-20 mr-4">
+                    <p class="uppercase font-light text-roman text-sm">A vintondalei<br> ház szerkezeti<br> rajza</p>
+                </div>
+        </section>
+    @endif
+{{--    <section class="max-w-7xl mx-auto px-8 illustration-box relative grid grid-flow-row auto-rows-max grid-cols-3 md:grid-cols-2 h-full my-6 gap-x-4 max-h-[60vh]" id="section">--}}
+    <section class="max-w-7xl mx-auto px-8 illustration-box relative grid grid-flow-row auto-rows-max grid-cols-3 md:grid-cols-2 h-full my-6 gap-x-4 lg:max-h-[60vh]" id="section">
         <div class="col-span-full md:col-span-1 md:row-span-full min-h-[50vh] md:min-h-[60vh] lg:max-h-full my-12 md:my-0" id="container"></div>
 
         <div class="hidden md:flex justify-between flex-col">
@@ -29,6 +30,10 @@
                 </h4>
             </div>
         @endforeach
+    </section>
+    <section class="max-w-7xl mx-auto px-8 my-14 lg:my-20" id="research">
+        <h4 class="text-xl font-light text-roman uppercase">{{ __('Research') }}</h4>
+        <p class="font-light text-white mt-4 md:columns-2">{{ __('Research Content') }}</p>
     </section>
 @endsection
 

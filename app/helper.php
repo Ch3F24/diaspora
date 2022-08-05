@@ -12,5 +12,4 @@ if (! function_exists('currentPage')) {
 
         return $current === $route ? 'active' : '';
     }
-
 }
