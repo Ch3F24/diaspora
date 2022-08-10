@@ -44,7 +44,8 @@ class PageController extends Controller
         }
 
 //        $categories = new CategoryResource($categories);
-        $categories = CategoryCollection::collection($categories);
+//        $categories = CategoryCollection::collection($categories);
+        $categories = CategoryCollection::collection(Category::query()->find(1)->get());
 
         $page_title = __(self::LOCATION[$location]['title']);
 

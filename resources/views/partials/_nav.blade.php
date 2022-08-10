@@ -5,7 +5,7 @@
                 <a href="{{route('home')}}">
                     <p class="text-2xl lg:text-5xl text-roman">{{ $page_title ? $page_title : 'Magyarok /n a nagyvilágban'}}</p>
                     @if($page_title == 'Vintondale')
-                        <p class="text-xl text-roman mt-8 hidden lg:block">{{ __('sub_title-'. $page_title) }}</p>
+                        <p class="text-diaspo text-roman mt-4 hidden lg:block italic">{{ __('sub_title-'. $page_title) }}</p>
                     @endif
                 </a>
             </div>
@@ -26,11 +26,13 @@
                     <a href="{{ url()->previous() }}" class="text-roman">
                         <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 100 100"><path d="M 10,50 L 60,100 L 60,95 L 15,50  L 60,5 L 60,0 Z" class="arrow"></path></svg>
                     </a>
-                    <a href="/" class="text-lg font-light text-roman hover:text-white transition-color uppercase {{ currentPage('home') }}">{{ __('Globe') }}</a>
-                    <a href="{{ route('location','wintondale') }}" class="text-lg font-light text-roman hover:text-white transition-color uppercase {{ currentPage('wintondale',true) }}">{{ __('Vintondale') }}</a>
-                    @if(\Illuminate\Support\Facades\Route::currentRouteName() === 'location')
-                        <a href="#research" class="text-lg font-light text-roman hover:text-white transition-color uppercase">{{ __('Research') }}</a>
-                    @endif
+                    <a href="/" class="text-sm text-roman hover:text-white transition-color uppercase font-light {{ currentPage('home') }}">{{ __('Globe') }}</a>
+                    <a href="{{ route('location','wintondale') }}" class="text-sm text-roman hover:text-white transition-color uppercase font-light {{ currentPage('wintondale',true) }}">{{ __('Vintondale') }}</a>
+                    <a href="{{ route('location','argentine') }}" class="text-sm text-roman hover:text-white transition-color uppercase font-light {{ currentPage('argentine',true) }}">{{ __('Argentine') }}</a>
+
+{{--                    @if(\Illuminate\Support\Facades\Route::currentRouteName() === 'location')--}}
+{{--                        <a href="#research" class="text-sm text-roman hover:text-white transition-color uppercase font-light">{{ __('Research') }}</a>--}}
+{{--                    @endif--}}
                     <ul class="flex text-roman md:mr-8">
                         @foreach(Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                             <li>
@@ -39,14 +41,14 @@
                                     hreflang="{{ $localeCode }}"
                                     @class([
                                         'text-white' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::getCurrentLocale() == $localeCode,
-                                        "after:content-['|'] after:mx-2 after:text-roman after:leading-[1.1] after:my-auto flex" => $localeCode == 'hu','hover:text-white transition-color font-light text-lg'])
+                                        "after:content-['|'] after:mx-2 after:text-roman after:leading-[1.1] after:my-auto " => $localeCode == 'hu','hover:text-white transition-color text-sm flex font-light'])
                                     href="{{ Mcamara\LaravelLocalization\Facades\LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                                     {{ strtoupper($localeCode) }}
                                 </a>
                             </li>
                         @endforeach
                     </ul>
-{{--                    <a href="{{ route('location','argentine') }}" class="text-xl font-light text-roman hover:text-white transition-color pb-2">{{ __('Argentine') }}</a>--}}
+{{--                    <a href="{{ route('location','argentine') }}" class="text-xl text-roman hover:text-white transition-color pb-2">{{ __('Argentine') }}</a>--}}
                 </nav>
             </div>
         </div>

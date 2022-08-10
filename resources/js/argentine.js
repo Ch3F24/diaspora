@@ -1,27 +1,15 @@
 import * as THREE from 'three';
 
-// import Stats from './jsm/libs/stats.module.js';
-import Stats from 'three/examples/jsm/libs/stats.module.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-// import { GUI } from '.three/examples//jsm/libs/lil-gui.module.min.js';
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
-import {vector} from "three/examples/jsm/nodes/core/NodeBuilder";
-import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer";
-// import {SVGLoader} from "three/examples/jsm/loaders/SVGLoader";
-// import decor from 'three/examples/js/libs/draco/gltf'
 
+let mixer;
 
-let mixer, labelRenderer,endPath1;
-
-// let shape1;
-const section = document.getElementById('section');
-const clock = new THREE.Clock();
+// const clock = new THREE.Clock();
 const container = document.getElementById( 'container' );
-// const stats = new Stats();
-// container.appendChild( stats.dom );
 
 const renderer = new THREE.WebGLRenderer( { antialias: true,alpha: true } );
 renderer.setClearColor( 0xffffff, 0);
@@ -61,35 +49,13 @@ let raycaster = new THREE.Raycaster();
 let INTERSECTED, INTERSECTEDLINE;
 const pointer = new THREE.Vector2();
 
-// const pointer = new THREE.Vector2();
-// const sphere = ;
-// const group = new THREE.Group();
-const equipments = [];
-let p;
-
-loader.load( '/3d/wintondale.gltf', function ( gltf ) {
+loader.load( '/3d/argentine.gltf', function ( gltf ) {
 
     const model = gltf.scene;
     const group = new THREE.Group();
-    // points = model.children[0].children[0].children
-    // model.children[0].children[0].visible = false
-    // console.log(points)
-    // model.children[0].children[7].material.opacity = .5
-    // model.children[0].children[6].visible = false
-    // model.children[0].children[2].material.blending = THREE.AdditiveBlending
-    // model.children[0].children[2].material.emissive = new THREE.Color('#150604')
-    // model.children[0].children[2].material.emissiveIntensity = 0.01
-    // model.children[0].children[2].material.color = new THREE.Color('#150604')
+
     model.children[0].material.color = new THREE.Color('#ff2d2d')
-    // model.children[0].material.emissive = new THREE.Color('#ff6460')
-    // model.children[0].material.emissiveIntensity = 0
-    // model.children[0].children[2].material.trans = new THREE.Color('#100402')
-    // model.children[0].children[2].material.transparent = true
-    // model.children[0].children[7].material.opacity = 0.02
 
-
-    // model.children[7].material.opacity = .5
-    // model.children[0].material.color = new THREE.Color('#DA6C56')
     const geometry = new THREE.SphereGeometry( 5, 50, 6 );
     //
     for (let i = 0; i < 6; i++) {
@@ -97,37 +63,22 @@ loader.load( '/3d/wintondale.gltf', function ( gltf ) {
         sphere.name = i;
         points.push(sphere)
         sphere.updateMatrixWorld()
-        // model.add( sphere );
         group.add( sphere );
     }
-    points[0].position.set(60,160,120) // front top
-    points[1].position.set(40,50,120) // front bottom
-    points[2].position.set(-70,160,40) // center left
-    points[3].position.set(-20,250,-30) // roof center
-    points[4].position.set(60,160,-100) // front top
+    points[0].position.set(-40,30,160) // front left
+    points[1].position.set(40,50,120) // front right
+    points[2].position.set(-70,50,40) // center left
+    points[3].position.set(-20,10,-30) // roof center
+    points[4].position.set(60,20,-100) // front top
     points[5].position.set(-80,20,-120) // back bottom
 
     model.add(group)
-    // points[0].material.color = new THREE.Color('#150604')
 
-    model.position.set( 0, -1.4, 0 );
+    model.position.set( 0, -1, 0 );
     model.scale.set( 0.014, 0.014, 0.014 );
     scene.add( model );
     mixer = new THREE.AnimationMixer( model );
     scene.updateMatrixWorld(true);
-
-    // const svgMarkup = document.querySelector('svg').outerHTML;
-    // const svgLoader = new THREE.SVGLoader();
-    // const svgData = svgLoader.parse(svgMarkup);
-
-    // const equipmentsUrl = ['/svg/cash_register.svg','/svg/bicaj.svg','/svg/demizson.svg','/svg/szecskazo.svg','/svg/mosodeszka.svg','/svg/enekeskonyv.svg']
-
-    // equipmentsUrl.forEach((equipment,i) => {
-    //     // console.log(loadSvg(equipment,model))
-    //     equipments.push(loadSvg(equipment,model,i));
-    // })
-
-    // window.addEventListener( 'resize', onWindowResize );
 
     animate();
     scene.updateMatrixWorld();
@@ -143,54 +94,25 @@ loader.load( '/3d/wintondale.gltf', function ( gltf ) {
 
 function onPointerMove( event ) {
 
-    // calculate pointer position in normalized device coordinates
-    // (-1 to +1) for both components
-
-    // const rect = renderer.domElement.getBoundingClientRect();
-    // const x = event.clientX - rect.left;
-    // const y = event.clientY - rect.top;
-
-    // pointer.x = ( x / renderer.domElement.clientWidth ) *  2 - 1;
-    // pointer.y = ( y / renderer.domElement.clientHeight) * - 2 + 1
-
-    // pointer.x = ( (event.clientX - renderer.domElement.offsetLeft) / renderer.domElement.clientWidth ) * 2 - 1;
-    // pointer.y = ( (event.clientY - renderer.domElement.offsetTop) / renderer.domElement.clientHeight ) * -2 + 1;
-
     const rect = renderer.domElement.getBoundingClientRect();
     pointer.x = ( ( event.clientX - rect.left ) / ( rect. right - rect.left ) ) * 2 - 1;
     pointer.y = - ( ( event.clientY - rect.top ) / ( rect.bottom - rect.top) ) * 2 + 1;
 
-    // pointer.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-    // pointer.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
-
 }
-
-// function onPointerMove( event ) {
-//
-//     pointer.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-//     pointer.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
-//     console.log(pointer)
-//
-// }
 
 window.onresize = function () {
     camera.aspect = container.offsetWidth / container.offsetHeight;
     camera.updateProjectionMatrix();
 
     renderer.setSize( container.offsetWidth, container.offsetHeight );
-
 };
 
 function animate() {
 
     requestAnimationFrame( animate );
 
-    const delta = clock.getDelta();
+    // const delta = clock.getDelta();
     let v = new THREE.Vector3();
-
-    // equipments.forEach(equipment => {
-    //     equipment.lookAt(camera.getWorldPosition(v))
-    // })
     camera.updateMatrixWorld();
 
 

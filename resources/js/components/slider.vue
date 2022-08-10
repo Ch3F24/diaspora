@@ -3,8 +3,8 @@
 <!--    <div class="relative grid lg:grid-cols-7 h-full my-6 gap-x-4 text-white font-light" v-if="category" >-->
     <div class="relative lg:flex h-full my-6 text-white font-light" v-if="category" >
         <div class="lg:hidden">
-            <h3 v-if="category.sub_title" class="text-2xl italic mb-8">{{ category.sub_title }}</h3>
-            <p v-if="category.description">{{ category.description }}</p>
+<!--            <h3 v-if="category.sub_title" class="text-2xl italic mb-8">{{ category.sub_title }}</h3>-->
+            <p v-if="category.description" class="text-diaspo leading-[1.6rem]">{{ category.description }}</p>
         </div>
 <!--        <div class="col-span-full lg:col-span-4 my-12 lg:my-0 lg:mx-16">-->
 <!--        <div class="lg:w-7/12 my-12 lg:my-0 lg:pr-20">-->
@@ -23,20 +23,20 @@
         <div class=" lg:w-5/12 lg:col-end-8 lg:row-span-full">
 
             <div class="hidden lg:block mb-8">
-                <h3 v-if="category.sub_title" class="text-2xl font-light italic mb-8">{{ category.sub_title }}</h3>
-                <p v-if="category.description">{{ category.description }}</p>
+<!--                <h3 v-if="category.sub_title" class="text-2xl font-light italic mb-8">{{ category.sub_title }}</h3>-->
+                <p v-if="category.description" class="text-diaspo leading-[1.6rem]">{{ category.description }}</p>
             </div>
 
-            <p class="uppercase text-roman text-xl font-light" v-if="equipmentTitle">{{ equipmentTitle }}</p>
-            <p class="uppercase text-roman font-light" v-if="equipmentInventoryNumber">{{ equipmentInventoryNumber }}</p>
-            <div class="space-y-4 mt-4 lg:mt-8 mb-8 lg:mb-12">
-                <p v-if="equipmentSubTitle">{{ equipmentSubTitle }}</p>
+            <p class="uppercase text-roman text-diaspo font-light" v-if="equipmentTitle">{{ equipmentTitle }}</p>
+            <p class="uppercase text-roman font-light text-sm" v-if="equipmentInventoryNumber">{{ equipmentInventoryNumber }}</p>
+            <div class="space-y-4 mt-4 lg:mt-8 mb-8 lg:mb-12 text-sm">
+                <p v-if="equipmentSubTitle" class="text-diaspo leading-[1.6rem]">{{ equipmentSubTitle }}</p>
                 <p v-if="equipmentNews">{{ equipmentNews }}</p>
             </div>
 
             <svg-vue icon="hunglish" class="w-28" v-if="equipmentHunglish"></svg-vue>
-            <p class="uppercase text-roman font-light mt-4" v-if="equipmentHunglish">Hunglish</p>
-            <p v-if="equipmentHunglish" class="text-left">{{ equipmentHunglish }}</p>
+            <p class="uppercase text-roman font-light mt-4 text-diaspo" v-if="equipmentHunglish">Hunglish</p>
+            <p v-if="equipmentHunglish" class="text-left text-sm">{{ equipmentHunglish }}</p>
         </div>
 
 

@@ -11,7 +11,11 @@
                 <a href="{{ route('location','wintondale') }}">{{ __('Vintondale') }}</a>
             </h4>
         </div>
-
+        <div class="md:col-start-5 md:col-end-7 md:row-start-6 order-first md:order-none">
+            <h4 id="argentine-link" class="text-white text-xl inline-block font-light">
+                <a href="{{ route('location','argentine') }}">{{ __('Argentine') }}</a>
+            </h4>
+        </div>
 {{--        <div class="text-right md:text-center md:col-start-5 md:col-end-7 order-last md:order-none">--}}
 {{--            <h4 id="argentine-link" class="text-white text-xl inline-block">--}}
 {{--                <a href="{{ route('location','argentine') }}" class="pl-4">{{ __('Argentine') }}</a>--}}

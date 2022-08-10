@@ -14,6 +14,9 @@ module.exports = {
                 'midnight': '#001228',
                 'roman': '#ff6460'
             },
+            fontSize: {
+              'diaspo': '19px'
+            },
             fontFamily: {
                 sans: ['Helvetica','sans-serif'],
                 roboto: ['Roboto', 'sans-serif'],

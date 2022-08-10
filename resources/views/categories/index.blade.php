@@ -4,20 +4,20 @@
     @if($page_title === 'Vintondale')
         <section class="max-w-7xl mx-auto px-8 mt-8 lg:-mt-12">
                 <div class="hidden md:flex md:w-5/12">
-                    <img src="{{ asset('images/kisalaprajz.svg') }}" alt="Logo" width="100" class="lg:ml-20 mr-4">
-                    <p class="uppercase font-light text-roman text-sm">A vintondalei<br> ház szerkezeti<br> rajza</p>
+                    <img src="{{ asset('images/kisalaprajz.svg') }}" alt="Logo" width="74" class="lg:ml-20 mr-4">
+                    <p class="uppercase font-light text-roman text-xs leading-[18px]">A vintondalei<br> ház szerkezeti<br> rajza</p>
                 </div>
         </section>
     @endif
 {{--    <section class="max-w-7xl mx-auto px-8 illustration-box relative grid grid-flow-row auto-rows-max grid-cols-3 md:grid-cols-2 h-full my-6 gap-x-4 max-h-[60vh]" id="section">--}}
-    <section class="max-w-7xl mx-auto px-8 illustration-box relative grid grid-flow-row auto-rows-max grid-cols-3 md:grid-cols-2 h-full my-6 gap-x-4 lg:max-h-[60vh]" id="section">
-        <div class="col-span-full md:col-span-1 md:row-span-full min-h-[50vh] md:min-h-[60vh] lg:max-h-full my-12 md:my-0" id="container"></div>
+    <section class="max-w-7xl mx-auto px-8 illustration-box relative grid grid-flow-row auto-rows-max grid-cols-3 md:flex h-full my-6 gap-x-4 lg:max-h-[60vh]" id="section">
+        <div class="col-span-full md:col-span-1 md:row-span-full min-h-[50vh] md:min-h-[60vh] lg:max-h-full my-12 md:my-0 md:w-7/12" id="container"></div>
 
-        <div class="hidden md:flex justify-between flex-col">
+        <div class="hidden md:flex justify-between flex-col md:w-5/12 items-start">
             @foreach($categories as $key => $category)
                 <div class="text-center md:col-start-5 md:col-end-8 @if($key <= 2) order-first md:order-none @endif">
-                    <h4 data-cat="cat-{{ $key }}"  class="text-white lg:text-xl inline-block font-light">
-                        <a href="{{ route('category',['location' => $category->location,'slug' => $category->slug]) }}" data-cat="{{ $key }}" class="lg:pl-4 hover:text-roman category-link">{{ $category->title }}</a>
+                    <h4 data-cat="cat-{{ $key }}"  class="text-white text-diaspo inline-block -ml-4">
+                        <a href="{{ route('category',['location' => $category->location,'slug' => $category->slug]) }}" data-cat="{{ $key }}" class="pl-2 hover:text-roman category-link font-light">{{ $category->title }}</a>
                     </h4>
                 </div>
             @endforeach
@@ -25,20 +25,24 @@
 
         @foreach($categories as $key => $category)
             <div class="md:hidden text-center md:col-start-5 md:col-end-8 @if($key <= 2) order-first md:order-none @endif">
-                <h4 data-cat="cat-{{ $key }}"  class="text-white lg:text-xl inline-block font-light">
-                    <a href="{{ route('category',['location' => $category->location,'slug' => $category->slug]) }}" data-cat="{{ $key }}" class="lg:pl-4 hover:text-roman category-link">{{ $category->title }}</a>
+                <h4 data-cat="cat-{{ $key }}"  class="text-white text-diaspo inline-block">
+                    <a href="{{ route('category',['location' => $category->location,'slug' => $category->slug]) }}" data-cat="{{ $key }}" class="lg:pl-4 hover:text-roman category-link font-light">{{ $category->title }}</a>
                 </h4>
             </div>
         @endforeach
     </section>
-    <section class="max-w-7xl mx-auto px-8 my-14 lg:my-20" id="research">
-        <h4 class="text-xl font-light text-roman uppercase">{{ __('Research') }}</h4>
-        <p class="font-light text-white mt-4 md:columns-2">{{ __('Research Content') }}</p>
-    </section>
+{{--    <section class="max-w-7xl mx-auto px-8 my-14 lg:my-20" id="research">--}}
+{{--        <h4 class="text-diaspo font-light text-roman uppercase">{{ __('Research') }}</h4>--}}
+{{--        <p class="font-light text-sm text-white mt-4 md:columns-3 gap-x-8">{{ __('Research Content') }}</p>--}}
+{{--    </section>--}}
 @endsection
 
 @section('assets')
-<script src="{{mix('js/house.js')}}"></script>
+    @if($page_title === 'Vintondale')
+        <script src="{{mix('js/house.js')}}"></script>
+    @else
+        <script src="{{mix('js/argentine.js')}}"></script>
+    @endif
 <style>
     #info {
         position: absolute;
