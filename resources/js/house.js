@@ -28,6 +28,8 @@ renderer.setClearColor( 0xffffff, 0);
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( container.offsetWidth, container.offsetHeight );
 renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.outputEncoding = 3000;
+renderer.toneMapping = THREE.ReinhardToneMapping;
 container.appendChild( renderer.domElement );
 
 const pmremGenerator = new THREE.PMREMGenerator( renderer );
@@ -80,7 +82,7 @@ loader.load( '/3d/wintondale.gltf', function ( gltf ) {
     // model.children[0].children[2].material.emissive = new THREE.Color('#150604')
     // model.children[0].children[2].material.emissiveIntensity = 0.01
     // model.children[0].children[2].material.color = new THREE.Color('#150604')
-    model.children[0].material.color = new THREE.Color('#ff2d2d')
+    model.children[0].material.color = new THREE.Color('#ff6460')
     // model.children[0].material.emissive = new THREE.Color('#ff6460')
     // model.children[0].material.emissiveIntensity = 0
     // model.children[0].children[2].material.trans = new THREE.Color('#100402')
@@ -143,35 +145,11 @@ loader.load( '/3d/wintondale.gltf', function ( gltf ) {
 
 function onPointerMove( event ) {
 
-    // calculate pointer position in normalized device coordinates
-    // (-1 to +1) for both components
-
-    // const rect = renderer.domElement.getBoundingClientRect();
-    // const x = event.clientX - rect.left;
-    // const y = event.clientY - rect.top;
-
-    // pointer.x = ( x / renderer.domElement.clientWidth ) *  2 - 1;
-    // pointer.y = ( y / renderer.domElement.clientHeight) * - 2 + 1
-
-    // pointer.x = ( (event.clientX - renderer.domElement.offsetLeft) / renderer.domElement.clientWidth ) * 2 - 1;
-    // pointer.y = ( (event.clientY - renderer.domElement.offsetTop) / renderer.domElement.clientHeight ) * -2 + 1;
 
     const rect = renderer.domElement.getBoundingClientRect();
     pointer.x = ( ( event.clientX - rect.left ) / ( rect. right - rect.left ) ) * 2 - 1;
     pointer.y = - ( ( event.clientY - rect.top ) / ( rect.bottom - rect.top) ) * 2 + 1;
-
-    // pointer.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-    // pointer.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
-
 }
-
-// function onPointerMove( event ) {
-//
-//     pointer.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-//     pointer.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
-//     console.log(pointer)
-//
-// }
 
 window.onresize = function () {
     camera.aspect = container.offsetWidth / container.offsetHeight;
@@ -248,36 +226,30 @@ function screenPos(obj)
     return vector
 }
 
-// function pointsHover() {
-    var links = document.getElementsByClassName('category-link');
-        // console.log(Object.entries(links))
-
-    for (var i = 0; i < links.length; i++) {
-        links[i].addEventListener('mouseover', function (event) {
-            points[event.target.getAttribute("data-cat")].visible = false
-            // equipments[event.target.getAttribute("data-cat")].visible = true
-            let po = screenPos(points[event.target.getAttribute("data-cat")]);
-            line = new LeaderLine(event.target,LeaderLine.pointAnchor({x: po.x, y: po.y}),{
-                startPlug: 'behind',
-                endPlug: 'disc',
-                endPlugSize: 8,
-                color: 'white',
-                size: 1.5,
-                endPlugColor: '#DA6C56',
-                hoverStyle: {color:'red'},
-                path: 'straight'
-            })
-            // line.end = LeaderLine.pointAnchor({x: 200, y: 300})
-        })
-        links[i].addEventListener('mouseleave', function (event) {
-            points[event.target.getAttribute("data-cat")].visible = true
-            // equipments[event.target.getAttribute("data-cat")].visible = false
-            line.remove()
-        })
-}
-
-
+var links = document.getElementsByClassName('category-link');
 let line;
+
+for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener('mouseover', function (event) {
+        points[event.target.getAttribute("data-cat")].visible = false
+        // equipments[event.target.getAttribute("data-cat")].visible = true
+        let po = screenPos(points[event.target.getAttribute("data-cat")]);
+        line = new LeaderLine(event.target,LeaderLine.pointAnchor({x: po.x, y: po.y}),{
+            startPlug: 'behind',
+            endPlug: 'disc',
+            endPlugSize: 8,
+            color: 'white',
+            size: 1.5,
+            endPlugColor: '#DA6C56',
+            hoverStyle: {color:'red'},
+            path: 'straight'
+        })
+    })
+    links[i].addEventListener('mouseleave', function (event) {
+        points[event.target.getAttribute("data-cat")].visible = true
+        line.remove()
+    })
+}
 
 
 

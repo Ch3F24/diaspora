@@ -15,7 +15,9 @@ const renderer = new THREE.WebGLRenderer( { antialias: true,alpha: true } );
 renderer.setClearColor( 0xffffff, 0);
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( container.offsetWidth, container.offsetHeight );
-renderer.outputEncoding = THREE.sRGBEncoding;
+// renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.outputEncoding = 3000;
+renderer.toneMapping = THREE.ReinhardToneMapping;
 container.appendChild( renderer.domElement );
 
 const pmremGenerator = new THREE.PMREMGenerator( renderer );
@@ -54,7 +56,7 @@ loader.load( '/3d/argentine.gltf', function ( gltf ) {
     const model = gltf.scene;
     const group = new THREE.Group();
 
-    model.children[0].material.color = new THREE.Color('#ff2d2d')
+    model.children[0].material.color = new THREE.Color('#ff6460')
 
     const geometry = new THREE.SphereGeometry( 5, 50, 6 );
     //

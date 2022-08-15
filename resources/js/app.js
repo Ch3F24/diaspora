@@ -1,63 +1,58 @@
 require('./bootstrap');
-window.vue = require('vue');
-const app = vue.createApp({});
-import SvgVue from 'svg-vue3';
-app.use(SvgVue);
-app.component('slider', require('./components/slider.vue').default);
-app.mount('#app');
 
 
-const links = {
-    winton: {
-        link: document.getElementById('winton-link'),
-        globePath: document.getElementById('globe-wintondale-path'),
-        endPath: document.getElementById('globe-wintondale')
-    },
-    argentine: {
-        link: document.getElementById('argentine-link'),
-        globePath: document.getElementById('globe-argentine-path'),
-        endPath: document.getElementById('globe-argentine')
-    },
-}
-const leaderLineStyle = {
-    startPlug: 'behind',
-    endPlug: 'disc',
-    endPlugSize: 5,
-    color: 'white',
-    size: 1,
-    path: 'straight'
-}
 
-function drawLine() {
-    for(const [key,value] of Object.entries(links)) {
-        if (value['link']) {
+// const links = {
+//     winton: {
+//         link: document.getElementById('winton-link'),
+//         globePath: document.getElementById('globe-wintondale-path'),
+//         endPath: document.getElementById('globe-wintondale')
+//     },
+//     argentine: {
+//         link: document.getElementById('argentine-link'),
+//         globePath: document.getElementById('globe-argentine-path'),
+//         endPath: document.getElementById('globe-argentine')
+//     },
+// }
+// const leaderLineStyle = {
+//     startPlug: 'behind',
+//     endPlug: 'disc',
+//     endPlugSize: 5,
+//     color: 'white',
+//     size: 1,
+//     path: 'straight'
+// }
 
-            value['link'].addEventListener('mouseenter',function () {
-                value['globePath'].style.fill = '#F8BFBA';
-            })
-            value['link'].addEventListener('mouseleave',function () {
-                value['globePath'].style.fill = 'transparent';
-            })
+// function drawLine() {
+//     for(const [key,value] of Object.entries(links)) {
+//         if (value['link']) {
+//
+//             value['link'].addEventListener('mouseenter',function () {
+//                 value['globePath'].style.fill = '#F8BFBA';
+//             })
+//             value['link'].addEventListener('mouseleave',function () {
+//                 value['globePath'].style.fill = 'transparent';
+//             })
+//
+//             if (window.matchMedia('screen and (max-width: 1024px)').matches) {
+//                 console.log('match')
+//                 new LeaderLine(value['link'],value['endPath'],leaderLineStyle)
+//             } else {
+//                 new LeaderLine(LeaderLine.mouseHoverAnchor(value['link'], 'draw',
+//                     {
+//                         style: {
+//                             color: 'white',
+//                             backgroundColor: null,
+//                             backgroundImage: null
+//                         },
+//                         hoverStyle: {
+//                             backgroundColor: null,
+//
+//                         }}
+//                 ), value['endPath'],leaderLineStyle);
+//             }
+//         }
+//     }
+// }
 
-            if (window.matchMedia('screen and (max-width: 1024px)').matches) {
-                console.log('match')
-                new LeaderLine(value['link'],value['endPath'],leaderLineStyle)
-            } else {
-                new LeaderLine(LeaderLine.mouseHoverAnchor(value['link'], 'draw',
-                    {
-                        style: {
-                            color: 'white',
-                            backgroundColor: null,
-                            backgroundImage: null
-                        },
-                        hoverStyle: {
-                            backgroundColor: null,
-
-                        }}
-                ), value['endPath'],leaderLineStyle);
-            }
-        }
-    }
-}
-
-drawLine();
+// drawLine();

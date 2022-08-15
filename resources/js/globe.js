@@ -1,12 +1,10 @@
 import * as THREE from 'three';
-
-// import Stats from './jsm/libs/stats.module.js';
-import Stats from 'three/examples/jsm/libs/stats.module.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import {MeshBasicMaterial} from "three";
 
 let mixer;
 
@@ -15,11 +13,15 @@ const clock = new THREE.Clock();
 const container = document.getElementById( 'container' );
 
 const renderer = new THREE.WebGLRenderer( { antialias: true,alpha: true } );
-renderer.setClearColor( 0xffffff, 0);
+renderer.setClearColor( '#001228', 0);
+
+
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize( container.offsetWidth, container.offsetHeight );
-renderer.outputEncoding = THREE.sRGBEncoding;
+// renderer.outputEncoding = THREE.sRGBEncoding;
 container.appendChild( renderer.domElement );
+renderer.outputEncoding = 3000;
+renderer.toneMapping = THREE.ReinhardToneMapping;
 
 const pmremGenerator = new THREE.PMREMGenerator( renderer );
 const scene = new THREE.Scene();
@@ -41,42 +43,58 @@ const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath( '/3d/gltf/' );
 
 const loader = new GLTFLoader();
-// const svgLoader = new SVGLoader();
 loader.setDRACOLoader( dracoLoader );
-// const geometry = new THREE.SphereGeometry( 5, 50, 6 );
-// const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
 
-const points = [];
-// let points;
-let raycaster = new THREE.Raycaster();
+const raycaster = new THREE.Raycaster();
 let INTERSECTED, INTERSECTEDLINE;
+const points = [];
+
 const pointer = new THREE.Vector2();
 
-// const pointer = new THREE.Vector2();
-// const sphere = ;
-// const group = new THREE.Group();
-const equipments = [];
-let p;
-
-loader.load( '/3d/foldgomb.gltf', function ( gltf ) {
+loader.load( '/3d/globe.gltf', function ( gltf ) {
 
     const model = gltf.scene;
-    console.log(model)
-    model.children[2].material.color = new THREE.Color('#1f1111')
-    model.children[3].material.color = new THREE.Color('#0b60de')
-    model.children[4].material.color = new THREE.Color('#ff6460')
-    model.children[0].material.color = new THREE.Color('#a40ee1')
-    model.children[1].material.color = new THREE.Color('#cff61e')
 
-    model.position.set( 0, 0, 0 );
+    model.traverse((child) => {
+
+        if ( ! child.isMesh ) return;
+
+        var prevMaterial = child.material;
+
+        child.material = new MeshBasicMaterial();
+    });
+
+    let sphereObject = new THREE.SphereGeometry( 5, 50, 6 );
+
+    for (let i = 0; i < 2; i++) {
+        let sphere = new THREE.Mesh(  sphereObject, new THREE.MeshBasicMaterial( { color: '#FFFFFF' } ))
+        sphere.name = i;
+        points.push(sphere)
+        sphere.updateMatrixWorld()
+        model.add( sphere );
+        // group.add( sphere );
+    }
+        points[0].position.set(155,100,70)
+        points[1].position.set(190,-30,-40)
+
+
+    model.children[1].material.color = new THREE.Color('#001228')
+    // model.children[1].material.transparent = true
+    // model.children[1].material.opacity = 0
+
+    model.children[0].material.color = new THREE.Color('#ff6460')
+
+    model.position.set( 0, .5, 0 );
+    console.log(model)
+    model.rotation.y = 100
     model.scale.set( 0.014, 0.014, 0.014 );
     scene.add( model );
     mixer = new THREE.AnimationMixer( model );
 
     animate();
     scene.updateMatrixWorld();
-    // points[0].parent.updateMatrixWorld();
-    // container.addEventListener( 'pointermove', onPointerMove );
+    points[0].parent.updateMatrixWorld();
+    container.addEventListener( 'pointermove', onPointerMove );
 
 
 }, undefined, function ( e ) {
@@ -110,40 +128,40 @@ function animate() {
     camera.updateMatrixWorld();
 
 
-    // raycaster.setFromCamera(pointer, camera);
-    //
-    // let intersects = raycaster.intersectObjects( points );
-    //
-    // if ( intersects.length > 0 ) {
-    //
-    //     if ( INTERSECTED !== intersects[ 0 ].object ) {
-    //
-    //         INTERSECTED = intersects[ 0 ].object;
-    //         let target = document.querySelector(`a[data-cat="${INTERSECTED.name}"]`)
-    //         let po = screenPos(intersects[ 0 ].object);
-    //         INTERSECTEDLINE = new LeaderLine(target,LeaderLine.pointAnchor({x: po.x, y: po.y}),{
-    //             startPlug: 'behind',
-    //             endPlug: 'disc',
-    //             endPlugSize: 8,
-    //             color: 'white',
-    //             size: 1.5,
-    //             endPlugColor: '#DA6C56',
-    //             hoverStyle: {color:'red'},
-    //             path: 'straight'
-    //         })
-    //
-    //         INTERSECTED.material.color = new THREE.Color('#DA6C56');
-    //     }
-    //
-    // } else {
-    //     if ( INTERSECTED ) {
-    //         INTERSECTEDLINE.remove();
-    //         INTERSECTED.material.color = new THREE.Color('#FFFFFF');
-    //     }
-    //
-    //     INTERSECTED = null;
-    //
-    // }
+    raycaster.setFromCamera(pointer, camera);
+    let intersects = raycaster.intersectObjects( points );
+
+    if ( intersects.length > 0 ) {
+
+        if ( INTERSECTED !== intersects[ 0 ].object ) {
+
+            INTERSECTED = intersects[ 0 ].object;
+            let target = document.querySelector(`a[data-cat="${INTERSECTED.name}"]`)
+            let po = screenPos(intersects[ 0 ].object);
+            console.log(target)
+            INTERSECTEDLINE = new LeaderLine(target,LeaderLine.pointAnchor({x: po.x, y: po.y}),{
+                startPlug: 'behind',
+                endPlug: 'disc',
+                endPlugSize: 5,
+                color: 'white',
+                size: 1.5,
+                endPlugColor: '#DA6C56',
+                hoverStyle: {color:'red'},
+                path: 'straight'
+            })
+
+            INTERSECTED.material.color = new THREE.Color('#DA6C56');
+        }
+
+    } else {
+        if ( INTERSECTED ) {
+            INTERSECTEDLINE.remove();
+            INTERSECTED.material.color = new THREE.Color('#FFFFFF');
+        }
+
+        INTERSECTED = null;
+
+    }
 
 
     renderer.render( scene, camera );
@@ -164,5 +182,26 @@ function screenPos(obj)
     return vector
 }
 
+var links = document.getElementsByClassName('category-link');
+let line;
 
-
+for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener('mouseover', function (event) {
+        points[event.target.getAttribute("data-cat")].visible = false
+        let po = screenPos(points[event.target.getAttribute("data-cat")]);
+        line = new LeaderLine(event.target,LeaderLine.pointAnchor({x: po.x, y: po.y}),{
+            startPlug: 'behind',
+            endPlug: 'disc',
+            endPlugSize: 5,
+            color: 'white',
+            size: 1.5,
+            endPlugColor: '#DA6C56',
+            hoverStyle: {color:'red'},
+            path: 'straight'
+        })
+    })
+    links[i].addEventListener('mouseleave', function (event) {
+        points[event.target.getAttribute("data-cat")].visible = true
+        line.remove()
+    })
+}
