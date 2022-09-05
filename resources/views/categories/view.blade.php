@@ -5,3 +5,7 @@
         <slider equipments-prop="{{ isset($category->equipments) ? json_encode($category->equipments) : null }}" category-prop="{{ json_encode($category) }}"></slider>
     </section>
 @endsection
+
+@section('assets')
+    <script src="{{mix('js/equipment.js')}}"></script>
+@endsection
