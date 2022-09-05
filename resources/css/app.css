@@ -62,7 +62,7 @@
 
 .slider .flickity-prev-next-button.next {
     top: calc(100% - 22px);
-    right: 0;
+    right: -60%;
     outline: none;
     box-shadow: none;
 }
@@ -81,9 +81,14 @@
 .slider .flickity-prev-next-button.next,
 .slider .flickity-prev-next-button.previous {
     top: 50%;
+    @apply relative
 }
 
 @media (min-width: 1024px) {
+    .slider .flickity-prev-next-button.next,
+    .slider .flickity-prev-next-button.previous {
+        @apply absolute
+    }
     .flickity-viewport {
         margin-bottom: 0;
     }

@@ -11,8 +11,8 @@
         <div class="lg:w-7/12 my-12 lg:my-0 mpr-8">
             <flickity ref="flickity" :options="flickityOptions" class="w-full slider h-full md:h-auto transition transition-opacity md:px-20" style=" opacity: 0">
                 <div class="carousel-cell flex items-center justify-center h-full" v-for="(equipment,key) in category.equipments" :key="equipment.id">
-                    <svg-vue v-if="equipment.svg && key === 0" :icon="equipment.svg" class="opacity-0 transition transition-opacity duration-500 md:max-h-[50vh] lg:max-h-[60vh]"></svg-vue>
-                    <img v-if="equipment.cover" :class="{'hidden opacity-0': key === 0}" class="transition transition-opacity duration-300 md:max-h-[50vh] lg:max-h-[60vh] h-full" :src="equipment.cover.default" alt="">
+                    <svg-vue v-if="equipment.svg && key === 0" :icon="equipment.svg" class="opacity-0 transition transition-opacity duration-500 md:max-h-[50vh] lg:max-h-[80vh]"></svg-vue>
+                    <img loading="lazy" v-if="equipment.cover" :class="{'hidden opacity-0': key === 0}" class="transition transition-opacity duration-300 md:max-h-[50vh] lg:max-h-[80vh] h-full" :src="equipment.cover.default" alt="">
 <!--                    <img :class="{'hidden opacity-0': key === 0}" class="transition transition-opacity duration-300 md:max-h-[50vh] lg:max-h-[60vh] h-full" src="https://tensorflow.org/images/surf.jpg" alt="">-->
 <!--                    <svg-vue v-if="equipment.svg && key === 0" :icon="equipment.svg" class="opacity-0 transition transition-opacity duration-500 md:max-h-[50vh] lg:max-h-[60vh]"></svg-vue>-->
 <!--                    <img v-else :class="{'hidden opacity-0': key === 0}" class="transition transition-opacity duration-300 md:max-h-[50vh] lg:max-h-screen" src="https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80" alt="">-->
@@ -241,15 +241,19 @@ export default {
 .carousel-cell svg {
     height: 300px;
 }
-@media screen and (min-height: 1024px) {
+@media (min-width: 1024px) {
     .carousel-cell {
-        max-height: 60vh;
+        max-height: 70vh;
+        min-height: 70vh;
+    }
+    .carousel-cell svg {
+        height: 70vh;
     }
 }
-.slider {
-    //max-height: 70vh;
-    //height: 100%;
-}
+/*.slider {*/
+/*    //max-height: 70vh;*/
+/*    //height: 100%;*/
+/*}*/
 .flickity-resize .carousel-cell {
     min-height: 100%;
 }
