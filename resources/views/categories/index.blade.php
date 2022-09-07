@@ -31,10 +31,10 @@
             </div>
         @endforeach
     </section>
-{{--    <section class="max-w-7xl mx-auto px-8 my-14 lg:my-20" id="research">--}}
-{{--        <h4 class="text-diaspo font-light text-roman uppercase">{{ __('Research') }}</h4>--}}
-{{--        <p class="font-light text-sm text-white mt-4 md:columns-3 gap-x-8">{{ __('Research Content') }}</p>--}}
-{{--    </section>--}}
+    <section class="lg:hidden max-w-7xl mx-auto px-8 my-14 lg:my-20" id="research">
+        <h4 class="text-diaspo font-light text-roman uppercase">{{ __('Research') }}</h4>
+        <p class="font-light text-sm text-white mt-4 md:columns-3 gap-x-8">{{ __('Research Content') }}</p>
+    </section>
 @endsection
 
 @section('assets')
