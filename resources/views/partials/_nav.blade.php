@@ -31,10 +31,10 @@
                     <a href="{{ route('location','argentine') }}" class="text-sm text-roman hover:text-white transition-color uppercase font-light {{ currentPage('argentine',true) }}">{{ __('Argentine') }}</a>
 
                     @if(\Illuminate\Support\Facades\Route::currentRouteName() === 'location')
-                        <div x-data="{ show: false }" class="relative" x-on:click.outside="show = false" >
-                            <span x-on:mouseover="show = true" class="text-sm text-roman hover:text-white transition-color uppercase font-light" x-bind:style="show && { color: 'white' }">{{ __('Research') }}</span>
-                            <div x-show="show" style="display: none"  class="absolute top-full left-0 w-[500px] p-8 bg-midnight bg-opacity-75 mt-4">
-                                <p class="text-white">{{ __('Research Content') }}</p>
+                        <div x-data="{ show: false }" class="relative">
+                            <span x-on:mouseover="show = true" x-on:mouseleave="show = false" class="text-sm text-roman hover:text-white transition-color uppercase font-light" x-bind:style="show && { color: 'white' }">{{ __('Research') }}</span>
+                            <div x-show="show" style="display: none"  class="absolute top-full left-0 w-[500px] p-12 bg-midnight bg-opacity-75 mt-4 border border-white research-arrow">
+                                <p class="text-white text-sm font-light">{{ __('Research Content') }}</p>
                             </div>
                         </div>
 {{--                        x-on:mouseout="show = false"--}}
