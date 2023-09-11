@@ -1,13 +1,9 @@
 <template>
 
-<!--    <div class="relative grid lg:grid-cols-7 h-full my-6 gap-x-4 text-white font-light" v-if="category" >-->
     <div class="relative lg:flex h-full my-6 text-white font-light" v-if="category" >
         <div class="lg:hidden">
-<!--            <h3 v-if="category.sub_title" class="text-2xl italic mb-8">{{ category.sub_title }}</h3>-->
             <p v-if="category.description" class="text-diaspo leading-[1.6rem]">{{ category.description }}</p>
         </div>
-<!--        <div class="col-span-full lg:col-span-4 my-12 lg:my-0 lg:mx-16">-->
-<!--        <div class="lg:w-7/12 my-12 lg:my-0 lg:pr-20">-->
         <div class="lg:w-7/12 my-12 lg:my-0 mpr-8">
             <flickity ref="flickity" :options="flickityOptions" class="w-full slider h-full md:h-auto transition transition-opacity md:px-20" style=" opacity: 0">
                 <div class="carousel-cell flex items-center justify-center h-full" v-for="(equipment,key) in category.equipments" :key="equipment.id">
@@ -19,11 +15,9 @@
                 </div>
             </flickity>
         </div>
-<!--        <div class=" lg:col-start-5 lg:col-end-8 lg:row-span-full">-->
         <div class=" lg:w-5/12 lg:col-end-8 lg:row-span-full">
 
             <div class="hidden lg:block mb-8">
-<!--                <h3 v-if="category.sub_title" class="text-2xl font-light italic mb-8">{{ category.sub_title }}</h3>-->
                 <p v-if="category.description" class="text-diaspo leading-[1.6rem]">{{ category.description }}</p>
             </div>
 
@@ -42,48 +36,6 @@
 
     </div>
 
-
-<!--    <div class="grid md:flex text-white" v-if="category">-->
-<!--        <div class="w-full lg:w-5/12 space-y-8 order-first lg:order-none my-6">-->
-<!--            <h3 v-if="category.sub_title" class="text-2xl font-bold italic">{{ category.sub_title }}</h3>-->
-<!--            <p v-if="category.description">{{ category.description }}</p>-->
-
-<!--            <div class="hidden lg:block">-->
-<!--                <p class="uppercase text-roman text-xl mb-4" v-if="equipmentTitle">{{ equipmentTitle }}</p>-->
-<!--                <div class="columns-2 space-y-4 mb-6">-->
-<!--                    <p v-if="equipmentSubTitle">{{ equipmentSubTitle }}</p>-->
-<!--                    <p v-if="equipmentNews">{{ equipmentNews }}</p>-->
-<!--                </div>-->
-
-<!--                <svg-vue icon="hunglish" class="w-28" v-if="equipmentHunglish"></svg-vue>-->
-
-<!--                <p v-if="equipmentHunglish">{{ equipmentHunglish }}</p>-->
-<!--            </div>-->
-
-<!--        </div>-->
-<!--        <div class="w-full lg:order-first lg:w-6/12 lg:pr-8 mr-auto" v-if="category.equipments">-->
-<!--&lt;!&ndash;            <flickity ref="flickity" :options="flickityOptions" class="w-4/5 h-full slider">&ndash;&gt;-->
-<!--            <flickity ref="flickity" :options="flickityOptions" class="w-full slider min-h-[50vh]">-->
-<!--                <div class="carousel-cell flex items-center justify-center h-full" v-for="equipment in category.equipments" :key="equipment.id">-->
-<!--                    <svg-vue v-if="equipment.svg" :icon="equipment.svg" class="hidden  transition transition-opacity duration-500"></svg-vue>-->
-<!--                    <img v-if="equipment.cover" class="hidden transition transition-opacity opacity-0 duration-300" :src="equipment.cover.default" alt="">-->
-<!--                    <img v-else class="hidden transition transition-opacity opacity-0 duration-300" src="https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80" alt="">-->
-<!--                </div>-->
-<!--            </flickity>-->
-<!--        </div>-->
-
-<!--        <div class="space-y-8 md:hidden mt-6" v-if="category.equipments">-->
-<!--            <p class="uppercase text-roman text-xl mb-4" v-if="equipmentTitle">{{ equipmentTitle }}</p>-->
-<!--            <div class="space-y-4">-->
-<!--                <p v-if="equipmentSubTitle">{{ equipmentSubTitle }}</p>-->
-<!--                <p v-if="equipmentNews">{{ equipmentNews }}</p>-->
-<!--            </div>-->
-
-<!--            <svg-vue icon="hunglish" class="w-28" v-if="equipmentHunglish"></svg-vue>-->
-
-<!--            <p v-if="equipmentHunglish">{{ equipmentHunglish }}</p>-->
-<!--        </div>-->
-<!--    </div>-->
 </template>
 
 <script>
@@ -191,6 +143,11 @@ export default {
                     } else {
                         img.style.opacity = '100%';
                         img.classList.remove('hidden');
+
+                        setTimeout(function () {
+                            __this.$refs.flickity.$el.style.opacity = '100%'
+                        },500)
+
 
                     }
                 }

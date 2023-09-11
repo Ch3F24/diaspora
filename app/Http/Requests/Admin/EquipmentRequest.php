@@ -8,12 +8,12 @@ class EquipmentRequest extends Request
 {
     public function rulesForCreate()
     {
-        return ['svg' => 'required_if:featured,true'];
+//        return ['svg' => 'required_if:featured,true'];
     }
 
     public function rulesForUpdate()
     {
-        return ['svg' => 'required_if:featured,true'];
+//        return ['svg' => 'required_if:featured,true'];
     }
 
     public function messages()
